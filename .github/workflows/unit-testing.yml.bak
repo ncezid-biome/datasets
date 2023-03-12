@@ -1,0 +1,73 @@
+# https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions
+# https://docs.github.com/en/actions/guides/publishing-docker-images
+# https://github.com/docker/build-push-action/blob/master/docs/advanced/share-image-jobs.md
+name: unit-testing
+on: [push, create]
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    name: ${{ matrix.DATASET }} (chunk${{ matrix.CHUNK }}, chunk size ${{ matrix.NUM_PER_CHUNK }})
+    strategy:
+      fail-fast: false
+      max-parallel: 50
+      matrix:
+        DATASET:
+          - datasets/toy-bacteria-saureus.tsv
+        NUM_PER_CHUNK: 
+          - 25
+        # TODO is there a $SGE_TASK_ID equivalent instead of listing each chunk???
+        CHUNK: [25, 50, 75, 100, 125, 150, 175, 200, 225, 250, 275, 300, 325, 350, 375, 400]
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - name: apt-get
+        run:  sudo apt-get install ca-certificates sra-toolkit ncbi-entrez-direct
+      - name: install bats-core
+        run:  |
+          git clone https://github.com/bats-core/bats-core.git
+          cd bats-core
+          sudo ./install.sh /usr/local
+          cd -
+          # test the command
+          which bats
+          bats -h
+      - name: env
+        run:  |
+          pwd
+          tree -d
+          echo EVENT_NAME ${{ github.event_name }}
+          echo ACTION ${{ github.event.action }}
+      - name: unit testing - just env
+        run:  |
+          bats t/00_env.bats
+      - name: unit test chunk of ${{ matrix.DATASET }}
+        run:  |
+          export NCBI_API_KEY=${{ secrets.NCBI_API_KEY }}
+          if [[ -z "$NCBI_API_KEY" ]]; then echo "NCBI_API_KEY not found in github secrets!"; fi;
+          
+          export DATASET=$(pwd -P)/${{ matrix.DATASET }}.${{ matrix.CHUNK }}.short
+          CHUNK=${{ matrix.CHUNK }}
+          NUM_PER_CHUNK=${{ matrix.NUM_PER_CHUNK }}
+
+          # Get the header of the dataset
+          grep -B 999 biosample_acc ${{ matrix.DATASET }} > $DATASET
+          # Get the samples of the dataset (everything past the header)
+          # and then get the number of lines dictated by CHUNK (e.g., 50, 100, 150,...)
+          #   with sed -n Xp
+          FIRST_LINE=$(($CHUNK - $NUM_PER_CHUNK + 1))
+          LAST_LINE=${{ matrix.CHUNK }}
+          grep -A 99999 biosample_acc ${{ matrix.DATASET }} | tail -n +2 | sed -n ${FIRST_LINE},${LAST_LINE}p >> $DATASET.body
+          cat $DATASET.body >> $DATASET
+
+          # If we have zero samples, just exit with pass
+          NUM_SAMPLES=$(wc -l < $DATASET.body)
+          if [[ $NUM_SAMPLES -lt 1 ]]; then
+            echo "Number of samples is zero; exiting with pass"
+            exit 0
+          fi
+
+          # Run the TAP compliant unit test which reads env variable $DATASET
+          echo "DATASET CHUNK $DATASET"
+          bats t/*
+
