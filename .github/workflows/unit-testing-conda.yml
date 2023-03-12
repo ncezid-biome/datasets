@@ -55,7 +55,7 @@ jobs:
         shell: bash -el {0}
         if: steps.cache-conda.outputs.cache-hit != 'true'
         run: | 
-          mamba install -y entrez-edirect sratoolkit bats-core
+          mamba install -y entrez-direct sra-tools bats-core
       - name: check installation
         shell: bash -el {0}
         run: | 
