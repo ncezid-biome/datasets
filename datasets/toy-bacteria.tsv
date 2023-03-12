@@ -1,0 +1,8 @@
+tree	-													
+dataType	CDC_VOI_VOC_Lineages_data_mining													
+source	Migun Shakya and TOAST													
+Outbreak	-													
+Organism	SARS-CoV-2													
+pmid	-													
+														
+GISAID_assession	Lineage_v3.1.3	SRArun_acc	biosample_acc	dataSetName	genBankAssembly	nucleotide	outbreak	primer_strategy	sha256sumAssembly	sha256sumRead1	sha256sumRead2	sha256sumnucleotide	strain	suggestedReference
