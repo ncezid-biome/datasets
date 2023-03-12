@@ -10,7 +10,7 @@ There are several advantages including
 * Fast to teach people bioinformatics workflows in a workshop setting
 
 ## Summary Table
-| Dataset  | Name | Description | Intended Use |tsv name | Primer Set | Reference
+| Dataset  | Name | Description | Intended Use |tsv name | Reference
 | ------------- | ------------- | ------------- | ------------- | ------------- | ----------| ------------- |
-| 1 | Staphylococcus aureus | hybrid Nanopore R9.4.1 and Illumina near-reference quality assembled Staphylococcus aureus whole genomes isolated from sinus swabs from Chronic Rhinosinusitis Patients, along with their plasmids. | Fast assembly of bacterial genomes with AMR | toy-bacteria-saureus.tsv | (PRJNA914892)[https://ncbi.nlm.nih.gov/bioproject/PRJNA914892] |
+| 1 | Staphylococcus aureus | hybrid Nanopore R9.4.1 and Illumina near-reference quality assembled Staphylococcus aureus whole genomes isolated from sinus swabs from Chronic Rhinosinusitis Patients, along with their plasmids. | Fast assembly of bacterial genomes with AMR | toy-bacteria-saureus.tsv | [PRJNA914892](https://ncbi.nlm.nih.gov/bioproject/PRJNA914892) |
 
