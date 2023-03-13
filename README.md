@@ -13,6 +13,7 @@ There are several advantages including
 | Dataset  | Name | Description | Intended Use |tsv name | Reference |
 | ------------- | ------------- | ------------- | ------------- | ------------- | ----------| 
 | 1 | Staphylococcus aureus | hybrid Nanopore R9.4.1 and Illumina near-reference quality assembled Staphylococcus aureus whole genomes isolated from sinus swabs from Chronic Rhinosinusitis Patients, along with their plasmids. | Fast assembly of bacterial genomes with AMR | toy-bacteria-saureus.tsv | [PRJNA914892](https://ncbi.nlm.nih.gov/bioproject/PRJNA914892) |
+| 2 | Salmonella AMR | A set of _Salmonella enterica_ genomes sequenced by ONT from three different publications. | Assembly and then confirmation of AMR results | Salmonella-AMR.tsv | |
 
 ## Installation & Usage
 
