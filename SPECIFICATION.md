@@ -1,16 +1,51 @@
 # Dataset specification
 
+The dataset specification describes a set of data that can be downloaded
+and some information about the data being downloaded.
+For example, what outbreak code it belongs to.
+
+The spreadsheet for the dataset is also meant to be read by a script
+`GenfsGopher.pl` so that it can all be automatically downloaded.
+
 ## Detailed fields
 
-1. The first part describes the dataset.  This is given as a two-column key/value format.  The keys are case-insensitive, but the values are case-sensitive.  The order of rows is unimportant.
-    1. Organism.  Usually genus and species, but there is no hard rule at this time.
-    2. Outbreak.  This is usually an outbreak code but can be some other descriptor of the dataset.
-    3. pmid.  Any publications associated with this dataset should be listed as pubmed IDs.
-    4. tree.  This is a URL to the newick-formatted tree.  This tree serves as a guide to future analyses.
-    5. source. Where did this dataset come from?
-    6. intendedUsage.  How do you think others will use this dataset?
-3. Blank row - separates the two parts of the dataset
-4. Header row with these names (case-insensitive, in any order): biosample_acc, ...
+The spreadsheet is divided into two parts:
+1) the information describing the whole dataset and 
+2) the information describing each sample.
+
+### Whole dataset information
+
+The first part describes the dataset.
+This is given as a two-column key/value format.
+The keys are case-insensitive, but the values are case-sensitive.  The order of rows is unimportant.
+
+| Field        | Description |
+| ------------ | ----------- |
+| Organism     | Usually genus and species, but there is no hard rule at this time. |
+| Outbreak     | This is usually an outbreak code but can be some other descriptor of the dataset. |
+| pmid         | Any publications associated with this dataset should be listed as pubmed IDs. |
+| tree         | This is a URL to the newick-formatted tree.  This tree serves as a guide to future analyses. |
+| source       | Where did this dataset come from? |
+| intendedUsage| How do you think others will use this dataset? |
+
+### blank row
+
+There is a blank row in the spreadsheet here
+
+### Header row
+
+Header row with field names in the following section such as `biosample_acc`.
+Not all fields are required.
+These field names are case insensitive and can be in any order.
+
+### Sample information
+
+| Field         | Required? | Description | example    |
+| ------------- | --------- | ----------- | ---------- |
+| `biosample_acc` |     [x] | The BioSample accession | SAMN012345 |
+| `strain`      |       [x] | The name of the genome or strain | |
+
+
 5. Sample info.  Each row represents a genome and must have the following fields.  Use a dash (-) for any missing data.
     1. biosample_acc - The BioSample accession
     2. strain - Its genome name
