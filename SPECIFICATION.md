@@ -51,14 +51,14 @@ Other fields are optional and are marked with :negative_squared_cross_mark:.
 | ------------- | --------- | ----------- | ---------- |
 | `biosample_acc` | :heavy_check_mark:    | The BioSample accession | SAMN012345 |
 | `strain`      | :heavy_check_mark:      | The name of the genome or strain | |
-|`genbankAssembly`| :eight_spoked_asterisk: | GenBank accession number | |
+|`genbankAssembly`| :eight_spoked_asterisk: | GenBank accession number | GCA_027920385.1 |
 |`SRArun_acc`   | :eight_spoked_asterisk: | SRR accession number | SRR012345 |
 | `outbreak`    | :negative_squared_cross_mark: | The name of the outbreak clade.  Usually named after an outbreak code.  If not part of an important clade, the field can be filled in using `outgroup` | |
 | `dataSetName` | :negative_squared_cross_mark: | this should be redundant with the outbreak field in the first part of the spreadsheet | |
 | `suggestedReference` | :negative_squared_cross_mark: | The suggested reference genome for analysis, e.g., SNP analysis. | `TRUE` or `FALSE` |
 | `sha256sumAssembly` | :eight_spoked_asterisk: | A checksum for the GenBank file | |
 | `sha256sumRead1` | :eight_spoked_asterisk: | A checksum for the first read from the SRR accession | |
-| `sha256sumRead2` | :eight_spoked_asterisk: | A checksum for the second read from the SRR accession | |
+| `sha256sumRead2` | :eight_spoked_asterisk: | A checksum for the second read from the SRR accession | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` is a special example of when the second read is blank. |
 | `nucleotide` | :eight_spoked_asterisk: | A single nucleotide accession. This is sometimes an alternative to an assembly especially for one-contig genomes. | |
 | `sha256sumnucleotide` | :eight_spoked_asterisk: | a checksum for the single nucleotide accession. |  |
 | `amplicon_strategy` | :negative_squared_cross_mark: | which amplicon strategy was used? | `ARTIC V3`|
