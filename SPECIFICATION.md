@@ -19,14 +19,14 @@ The first part describes the dataset.
 This is given as a two-column key/value format.
 The keys are case-insensitive, but the values are case-sensitive.  The order of rows is unimportant.
 
-| Field        | Description |
-| ------------ | ----------- |
-| Organism     | Usually genus and species, but there is no hard rule at this time. |
-| Outbreak     | This is usually an outbreak code but can be some other descriptor of the dataset. |
+| Field        | Description | Example |
+| ------------ | ----------- | ------- |
+| Organism     | Usually genus and species, but there is no hard rule at this time. | SARS-CoV-2 |
+| Outbreak     | This is usually an outbreak code but can be some other descriptor of the dataset. | 1408MLGX6-3WGS |
 | pmid         | Any publications associated with this dataset should be listed as pubmed IDs. |
-| tree         | This is a URL to the newick-formatted tree.  This tree serves as a guide to future analyses. |
-| source       | Where did this dataset come from? |
-| intendedUsage| How do you think others will use this dataset? |
+| tree         | This is a URL to the newick-formatted tree.  This tree serves as a guide to future analyses. | `https://...` |
+| source       | Where did this dataset come from? | Cheryl Tarr |
+| intendedUsage| How do you think others will use this dataset? | cluster analysis |
 
 ### blank row
 
