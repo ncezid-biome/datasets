@@ -1,12 +1,12 @@
-tree	-
-source	George Bouras
-intendedUse	Fast assembly of ONT data
-dataType	toy dataset for ONT assembly and AMR
-pmid	-
-Outbreak	-
-Organism	Staphylococcus aureus
-
-SRArun_acc	biosample_acc	genBankAssembly	nucleotide	outbreak	sha256sumAssembly	sha256sumRead1	sha256sumRead2	sha256sumnucleotide	strain
+tree	-									
+source	George Bouras									
+intendedUse	Fast assembly of ONT data									
+dataType	toy dataset for ONT assembly and AMR									
+pmid	-									
+Outbreak	-									
+Organism	Staphylococcus aureus									
+										
+SRArun_acc	biosample_acc	genBankAssembly	nucleotide	outbreak	sha256sumAssembly	sha256sumRead1	sha256sumRead2	sha256sumnucleotide	strain	
 SRR22859828	SAMN32360857	-	-	-	-	61b70a4e117fa87acecc7012cdf79e9a2eea2c9adc4a2552b551aad4d80bda8e	108e047864ce2bf8d9fb0bebc44482e9dc28664da3283f5aa91f3d0fee750273	-	C113_nextseq	
 SRR22859991	SAMN32360857	-	-	-	-	02d46259b402e83c62b143e96e2dc6761f86b1ac9bd7dfccf9c27f60492afc85	e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855	-	C113_ont	
 -	SAMN32538168	GCA_027920385.1	-	-	-	-	-	-	C308	
