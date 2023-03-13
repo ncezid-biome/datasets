@@ -38,28 +38,30 @@ Header row with field names in the following section such as `biosample_acc`.
 Not all fields are required.
 These field names are case insensitive and can be in any order.
 
+Extra unnamed fields are discouraged because other fields might be added,
+but they will not affect the `GenfsGopher` script from working.
+
 ### Sample information
+
+Some fields are required and are marked with :heavy_check_mark:.
+Other fields are optional but require `NA` or `-` if the information is not present. These fields are marked with :eight_spoked_asterisk:.
+Other fields are optional and are marked with :negative_squared_cross_mark:.
 
 | Field         | Required? | Description | example    |
 | ------------- | --------- | ----------- | ---------- |
-| `biosample_acc` |     [x] | The BioSample accession | SAMN012345 |
-| `strain`      |       [x] | The name of the genome or strain | |
-
-
-5. Sample info.  Each row represents a genome and must have the following fields.  Use a dash (-) for any missing data.
-    1. biosample_acc - The BioSample accession
-    2. strain - Its genome name
-    3. genbankAssembly - GenBank accession number
-    4. SRArun_acc - SRR accession number
-    5. outbreak - The name of the outbreak clade.  Usually named after an outbreak code.  If not part of an important clade, the field can be filled in using 'outgroup'
-    6. dataSetName - this should be redundant with the outbreak field in the first part of the spreadsheet
-    7. suggestedReference - The suggested reference genome for analysis, e.g., SNP analysis.
-    8. sha256sumAssembly - A checksum for the GenBank file
-    9. sha256sumRead1 - A checksum for the first read from the SRR accession
-    10. sha256sumRead2 - A checksum for the second read from the SRR accession
-    11. nucleotide - A single nucleotide accession. This is sometimes an alternative to an assembly especially for one-contig genomes.
-    12. sha256sumnucleotide - a checksum for the single nucleotide accession.
-    13. amplicon_strategy - which amplicon strategy was used?  E.g., `ARTIC V3`
+| `biosample_acc` | :heavy_check_mark:    | The BioSample accession | SAMN012345 |
+| `strain`      | :heavy_check_mark:      | The name of the genome or strain | |
+|`genbankAssembly`| :eight_spoked_asterisk: | GenBank accession number | |
+|`SRArun_acc`   | :eight_spoked_asterisk: | SRR accession number | SRR012345 |
+| `outbreak`    | :negative_squared_cross_mark: | The name of the outbreak clade.  Usually named after an outbreak code.  If not part of an important clade, the field can be filled in using `outgroup` | |
+| `dataSetName` | :negative_squared_cross_mark: | this should be redundant with the outbreak field in the first part of the spreadsheet | |
+| `suggestedReference` | :negative_squared_cross_mark: | The suggested reference genome for analysis, e.g., SNP analysis. | `TRUE` or `FALSE` |
+| `sha256sumAssembly` | :eight_spoked_asterisk: | A checksum for the GenBank file | |
+| `sha256sumRead1` | :eight_spoked_asterisk: | A checksum for the first read from the SRR accession | |
+| `sha256sumRead2` | :eight_spoked_asterisk: | A checksum for the second read from the SRR accession | |
+| `nucleotide` | :eight_spoked_asterisk: | A single nucleotide accession. This is sometimes an alternative to an assembly especially for one-contig genomes. | |
+| `sha256sumnucleotide` | :eight_spoked_asterisk: | a checksum for the single nucleotide accession. |  |
+| `amplicon_strategy` | :negative_squared_cross_mark: | which amplicon strategy was used? | `ARTIC V3`|
 
 ## Creating hashsums
 
