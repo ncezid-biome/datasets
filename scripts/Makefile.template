@@ -8,6 +8,7 @@ SRR_idx := $(shell grep biosample_acc in.tsv | tr '\t' '\n' | grep -n SRArun_acc
 biosample_acc_idx := $(shell grep biosample_acc in.tsv | tr '\t' '\n' | grep -n biosample_acc | cut -f 1 -d:)
 strain_acc_idx := $(shell grep biosample_acc in.tsv | tr '\t' '\n' | grep -n strain | cut -f 1 -d:)
 assembly_acc_idx := $(shell grep biosample_acc in.tsv | tr '\t' '\n' | grep -n genbankAssembly | cut -f 1 -d:)
+zero_byte_hash := $(shell echo -n '' | sha256sum | cut -f 1 -d ' ')
 
 # Understand what files we'll download via the spreadsheet
 MANIFEST := $(shell grep -A 999999 biosample_acc in.tsv | perl -MData::Dumper -lane '\
@@ -19,9 +20,12 @@ MANIFEST := $(shell grep -A 999999 biosample_acc in.tsv | perl -MData::Dumper -l
 	END{print "trees.dnd\nprefetch.done\nsha256sum.log";}' \
 	)
 
+sha256_files := $(shell echo "$(MANIFEST)" | tr ' ' '\n' | grep '\.sha256$$')
 
 print-manifest:
 	@echo $(MANIFEST)
+	@echo
+	@echo $(sha256_files)
 
 all: $(MANIFEST)
 	@echo "DONE! If you used this script in a publication, please cite us at github.com/WGS-standards-and-analysis/datasets"
@@ -51,6 +55,9 @@ sha256sum.log: $(sha256_files)
 		biosample_acc_idx=$$(grep biosample_acc in.tsv | tr '\t' '\n' | grep -n biosample_acc | cut -f 1 -d: ) && \
 		biosample=$$(grep $$sample in.tsv | cut -f $(biosample_acc_idx) ) && \
 		SRR=$$(grep $$sample in.tsv | cut -f $(SRR_idx) ) && \
+		hash_idx=$$(grep biosample_acc in.tsv | tr '\t' '\n' | grep -n sha256sumRead2 | cut -f 1 -d: ) && \
+		hash=$$(grep $$sample in.tsv | cut -f $$hash_idx) && \
+		if [ "$$hash" = "$(zero_byte_hash)" ]; then echo "Second read in pair seems to be blank or missing due to a zero byte hash $(zero_byte_hash) (SRA Run accession: $$SRR)."; touch $@; exit 0; fi && \
 		mv -v ./$${SRR}_2.fastq '$@'
 
 %_2.fastq.sha256: %_2.fastq
@@ -64,6 +71,7 @@ sha256sum.log: $(sha256_files)
 	sample=$$(basename $@ _1.fastq) && \
 		biosample=$$(grep $$sample in.tsv | cut -f $(biosample_acc_idx) ) && \
 		SRR=$$(grep $$sample in.tsv | cut -f $(SRR_idx) ) && \
+		if [ "$$SRR" = "-" ]; then echo "SRA Run accession not listed for $$sample (SRA Run accession: $$SRR)."; touch $@; exit 0; fi && \
 		fastq-dump --defline-seq '@$$ac_$$sn/$$ri' --defline-qual '+' --split-3 -O . $$SRR && \
 		mv -v $${SRR}_1.fastq $@ || \
 		mv -v $${SRR}.fastq $@
