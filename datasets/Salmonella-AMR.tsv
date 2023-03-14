@@ -1,9 +1,9 @@
-source	CDC Enteric Diseases Laboratory Branch
-pmid	36036604,35727013,35416692
-dataType	ONT dataset for assembly and AMR
-tree	-
-
-AMR_genotype	Plasmids	SRArun_acc	biosample_acc	genbankAssembly	sha256sumAssembly	sha256sumRead1	sha256sumRead2	strain
+source	CDC Enteric Diseases Laboratory Branch								
+pmid	36036604,35727013,35416692								
+dataType	ONT dataset for assembly and AMR								
+tree	-								
+									
+AMR_genotype	Plasmids	SRArun_acc	biosample_acc	genbankAssembly	sha256sumAssembly	sha256sumRead1	sha256sumRead2	strain	
 "iroC,iroB,sinH,aph(3'')-Ib,aph(6)-Id,tet(A),golS,golT,mdsA,mdsB"	NA	SRR19768540	SAMN05596322	GCA_022569775.1	-	81adb5bcc45709a974304cc073480c00c007c2bf12d7490ba7a4468f062db3bc	e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855	2014AM-1331	
 "iroC,iroB,sinH,aph(3'')-Ib,aph(6)-Id,tet(A),golS,golT,mdsA,mdsB"	NA	SRR19768539	SAMN05596277	GCA_022569755.1	-	fa4a76f60d27c8ede80cd46c931456239d0e135d379d36145fbd8a7b9c957c43	e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855	2014AM-2067	
 "mdsB,mdsA,golT,golS,tet(A),aph(6)-Id,aph(3'')-Ib,sinH,iroB,iroC"	Col156	SRR19768530	SAMN07268462	GCA_010621305.2	-	50f925c1c4adfe1ec599e2b50e3cfedfe53f69f3eee3c522e6fa13036f6343cd	e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855	2015AM-0414	
