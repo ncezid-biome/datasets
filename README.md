@@ -1,8 +1,22 @@
 # Datasets
-Toy datasets for fast Oxford Nanopore assembly
+Toy and benchmark datasets
 
 ## Purpose
-We wish to put together a set of Oxford Nanopore data that is fast to assemble.
+
+### Benchmark datasets
+We wish to put together a set of data that, after assembly,
+the results can be compared back.
+These results can include actual assemblies or profiling such as MLST.
+There are several advantages including
+
+* Workshops and trainings
+* Proficiency testing
+* Certifications
+* Bioinformatics workflow development
+* Baseline comparison between bioinformatics pipelines
+
+### Toy datasets
+We wish to put together a set of data that is fast to assemble.
 There are several advantages including
 
 * Fast to test new bioinformatics workflows
