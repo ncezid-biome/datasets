@@ -45,8 +45,8 @@ but they will not affect the `GenfsGopher` script from working.
 ### Sample information
 
 Some fields are required and are marked with :heavy_check_mark:.
-Other fields are optional but require `NA` or `-` if the information is not present. These fields are marked with :eight_spoked_asterisk:.
-Other fields are optional and are marked with :negative_squared_cross_mark:.
+Other fields are optional but require `-` if the information is not present. These fields are marked with :eight_spoked_asterisk:.
+Other fields are optional and are marked with :negative_squared_cross_mark:. You must use `-` to indicate absence.
 
 | Field         | Required? | Description | example    |
 | ------------- | --------- | ----------- | ---------- |
