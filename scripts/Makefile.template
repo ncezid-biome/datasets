@@ -4,10 +4,10 @@ MAKEFLAGS += --no-builtin-variables
 export PATH := /scicomp/home-pure/gzu2/src/datasets-ncezid-biome/scripts:$(PATH)
 
 # Get index of some columns in the spreadsheet
-SRR_idx := $(shell grep biosample_acc in.tsv | tr '\t' '\n' | grep -n SRArun_acc | cut -f 1 -d:)
-biosample_acc_idx := $(shell grep biosample_acc in.tsv | tr '\t' '\n' | grep -n biosample_acc | cut -f 1 -d:)
-strain_acc_idx := $(shell grep biosample_acc in.tsv | tr '\t' '\n' | grep -n strain | cut -f 1 -d:)
-assembly_acc_idx := $(shell grep biosample_acc in.tsv | tr '\t' '\n' | grep -n genbankAssembly | cut -f 1 -d:)
+SRR_idx := $(shell grep biosample_acc in.tsv | tr '\t' '\n' | grep -in SRArun_acc | cut -f 1 -d:)
+biosample_acc_idx := $(shell grep biosample_acc in.tsv | tr '\t' '\n' | grep -in biosample_acc | cut -f 1 -d:)
+strain_acc_idx := $(shell grep biosample_acc in.tsv | tr '\t' '\n' | grep -in strain | cut -f 1 -d:)
+assembly_acc_idx := $(shell grep biosample_acc in.tsv | tr '\t' '\n' | grep -in genbankAssembly | cut -f 1 -d:)
 zero_byte_hash := $(shell echo -n '' | sha256sum | cut -f 1 -d ' ')
 
 # Understand what files we'll download via the spreadsheet
@@ -52,17 +52,17 @@ sha256sum.log: $(sha256_files)
 
 %_2.fastq: %_1.fastq
 	sample=$$(basename $@ _2.fastq) && \
-		biosample_acc_idx=$$(grep biosample_acc in.tsv | tr '\t' '\n' | grep -n biosample_acc | cut -f 1 -d: ) && \
+		biosample_acc_idx=$$(grep biosample_acc in.tsv | tr '\t' '\n' | grep -in biosample_acc | cut -f 1 -d: ) && \
 		biosample=$$(grep $$sample in.tsv | cut -f $(biosample_acc_idx) ) && \
 		SRR=$$(grep $$sample in.tsv | cut -f $(SRR_idx) ) && \
-		hash_idx=$$(grep biosample_acc in.tsv | tr '\t' '\n' | grep -n sha256sumRead2 | cut -f 1 -d: ) && \
+		hash_idx=$$(grep biosample_acc in.tsv | tr '\t' '\n' | grep -in sha256sumRead2 | cut -f 1 -d: ) && \
 		hash=$$(grep $$sample in.tsv | cut -f $$hash_idx) && \
 		if [ "$$hash" = "$(zero_byte_hash)" ]; then echo "Second read in pair seems to be blank or missing due to a zero byte hash $(zero_byte_hash) (SRA Run accession: $$SRR)."; touch $@; exit 0; fi && \
 		mv -v ./$${SRR}_2.fastq '$@'
 
 %_2.fastq.sha256: %_2.fastq
 	sample=$$(basename $@ _2.fastq.sha256) && \
-		hash_idx=$$(grep biosample_acc in.tsv | tr '\t' '\n' | grep -n sha256sumRead2 | cut -f 1 -d: ) && \
+		hash_idx=$$(grep biosample_acc in.tsv | tr '\t' '\n' | grep -in sha256sumRead2 | cut -f 1 -d: ) && \
 		hash=$$(grep $$sample in.tsv | cut -f $$hash_idx) && \
 		echo "$$hash  $^" > $@
 
@@ -78,13 +78,13 @@ sha256sum.log: $(sha256_files)
 
 %_1.fastq.sha256: %_1.fastq
 	sample=$$(basename $@ _1.fastq.sha256) && \
-		hash_idx=$$(grep biosample_acc in.tsv | tr '\t' '\n' | grep -n sha256sumRead1 | cut -f 1 -d: ) && \
+		hash_idx=$$(grep biosample_acc in.tsv | tr '\t' '\n' | grep -in sha256sumRead1 | cut -f 1 -d: ) && \
 		hash=$$(grep $$sample in.tsv | cut -f $$hash_idx) && \
 		echo "$$hash  $^" > $@
 
 %.fasta.sha256: %.fasta
 	sample=$$(basename $@ .fasta.sha256) && \
-	hash_idx=$$(grep biosample_acc in.tsv | tr '\t' '\n' | grep -n sha256sumAssembly | cut -f 1 -d: ) && \
+	hash_idx=$$(grep biosample_acc in.tsv | tr '\t' '\n' | grep -in sha256sumAssembly | cut -f 1 -d: ) && \
 	hash=$$(grep $$sample in.tsv | cut -f $$hash_idx) && \
 	echo "$$hash  $^" > $@
 
