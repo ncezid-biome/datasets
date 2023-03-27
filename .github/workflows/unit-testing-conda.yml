@@ -13,10 +13,10 @@ jobs:
           - datasets/toy-bacteria-saureus.tsv
           - datasets/Salmonella-AMR.tsv
         NUM_PER_CHUNK:
-          - 10
+          - 2
         # CHUNK is a set of numbers in increments of NUM_PER_CHUNK which exceeds the number
         # of samples in any given dataset.
-        CHUNK: [10, 20, 30, 40, 50]
+        CHUNK: [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26]
     defaults:
       run:
         shell: bash -el {0}
@@ -104,9 +104,16 @@ jobs:
           grep -A 99999 biosample_acc ${{ matrix.DATASET }} | tail -n +2 | sed -n ${FIRST_LINE},${LAST_LINE}p >> $DATASET.body
           cat $DATASET.body >> $DATASET
 
-          echo "DATASET CHUNK $DATASET"
           # If we have zero samples, just exit with pass
           NUM_SAMPLES=$(wc -l < $DATASET.body)
+
+          echo "======"
+          cat $DATASET
+          echo "======"
+          echo
+
+          echo "DATASET CHUNK $DATASET"
+          echo "  ...with $NUM_SAMPLES samples"
           if [[ $NUM_SAMPLES -lt 1 ]]; then
             echo "Number of samples is zero; exiting with pass"
           else
