@@ -68,10 +68,13 @@ function note(){
       note ""
       note "One last look at hashsums:"
       for i in $DATASET/*.sha256sum; do
-        cat $i;
+        note "Looking at sha256sum for $i"
+        note `cat $i`;
         # Show the checksum but make it not exit with a code
-        sha256sum -c $i || true
+        note `sha256sum -c $i || true`
       done
+      note ""
+      note `cat $DATASET/sha256sum.log.bak`
       # invoke an exit code > 1 with 'false'
       false
     fi
