@@ -68,6 +68,7 @@ function note(){
       note ""
       note "One last look at hashsums:"
       note `find $BATS_SUITE_TMPDIR -name sha256sum.log.bak -exec cat {} \;`
+      note `find $BATS_SUITE_TMPDIR -name '*.sha256sum' -exec grep -H . {} \;`
       # invoke an exit code > 1 with 'false'
       false
     fi
