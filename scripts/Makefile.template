@@ -22,10 +22,11 @@ MANIFEST := $(shell grep -A 999999 biosample_acc in.tsv | perl -MData::Dumper -l
 
 sha256_files := $(shell echo "$(MANIFEST)" | tr ' ' '\n' | grep '\.sha256$$')
 
+MANIFEST: 
+	echo "$(MANIFEST)" | tr ' ' '\n' | grep . > $@
+
 print-manifest:
 	@echo $(MANIFEST)
-	@echo
-	@echo $(sha256_files)
 
 all: $(MANIFEST)
 	@echo "DONE! If you used this script in a publication, please cite us at github.com/WGS-standards-and-analysis/datasets"
