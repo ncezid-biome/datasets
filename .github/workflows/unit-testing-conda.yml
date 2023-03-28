@@ -117,7 +117,10 @@ jobs:
           if [[ $NUM_SAMPLES -lt 1 ]]; then
             echo "Number of samples is zero; exiting with pass"
           else
-            # Run the TAP compliant unit test which reads env variable $DATASET
+            # Save a bit of time not running the 00.env.bats test again.
+            # Avoid running it by renaming it.
+            mv -nv t/00_env.bats t/00_env.bats.bak
+            # Run the TAP compliant unit test(s) which reads env variable $DATASET
             bats t/*
           fi
 
