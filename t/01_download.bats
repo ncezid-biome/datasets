@@ -67,14 +67,7 @@ function note(){
       note "ERROR on GenFSGopher! exit code $exit_code"
       note ""
       note "One last look at hashsums:"
-      for i in $BATS_SUITE_TMPDIR/$name.out/*.sha256sum; do
-        note "Looking at sha256sum for $i"
-        note `cat $i`;
-        # Show the checksum but make it not exit with a code
-        note `sha256sum -c $i || true`
-      done
-      note ""
-      note `cat $DATASET/sha256sum.log.bak`
+      note `find $BATS_SUITE_TMPDIR -name sha256sum.log.bak -exec cat {} \;
       # invoke an exit code > 1 with 'false'
       false
     fi
