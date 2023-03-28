@@ -65,6 +65,13 @@ function note(){
       xargs -n 1 bash -c 'echo -ne "$0\t"; cat $0 | sha256sum' | sed 's/^/# /' >&3 || true
     if [ "$exit_code" -gt 0 ]; then
       note "ERROR on GenFSGopher! exit code $exit_code"
+      note ""
+      note "One last look at hashsums:"
+      for i in $DATASET/*.sha256sum; do
+        cat $i;
+        # Show the checksum but make it not exit with a code
+        sha256sum -c $i || true
+      done
       # invoke an exit code > 1 with 'false'
       false
     fi
