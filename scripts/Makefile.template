@@ -43,7 +43,11 @@ trees.dnd:
 	wget $(tree_files) > $@
 
 prefetch.done: 
-	cut -f $(SRR_idx) in.tsv | grep '^SR[RED]' | xargs -n 50 -P 1 prefetch
+	SRA_runs=$$(cut -f $(SRR_idx) in.tsv | grep '^SR[RED]') && \
+	num_SRA_runs=$$(echo "$$SRA_runs" | wc -l) && \
+	if [[ "$$num_SRA_runs" -gt 0 ]]; then \
+		echo "$$SRA_runs" | xargs -n 50 -P 1 prefetch; \
+	fi
 	touch $@
 
 sha256sum.log: $(sha256_files)
