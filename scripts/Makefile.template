@@ -10,6 +10,9 @@ strain_acc_idx := $(shell grep biosample_acc in.tsv | tr '\t' '\n' | grep -in st
 assembly_acc_idx := $(shell grep biosample_acc in.tsv | tr '\t' '\n' | grep -in genbankAssembly | cut -f 1 -d:)
 zero_byte_hash := $(shell echo -n '' | sha256sum | cut -f 1 -d ' ')
 
+# Misc data
+tree_files := $(shell grep -B 9999 biosample_acc in.tsv | grep tree | cut -f 2)
+
 # Understand what files we'll download via the spreadsheet
 MANIFEST := $(shell grep -A 999999 biosample_acc in.tsv | perl -MData::Dumper -lane '\
 	BEGIN{my $$h=<>; chomp($$h); @header=split(/\t/, lc($$h));} \
