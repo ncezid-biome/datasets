@@ -14,11 +14,12 @@ zero_byte_hash := $(shell echo -n '' | sha256sum | cut -f 1 -d ' ')
 MANIFEST := $(shell grep -A 999999 biosample_acc in.tsv | perl -MData::Dumper -lane '\
 	BEGIN{my $$h=<>; chomp($$h); @header=split(/\t/, $$h);} \
 	@F{@header} = @F; \
-	if($$F{sha256sumRead1}){print "$$F{strain}_1.fastq\n$$F{strain}_1.fastq.sha256"} \
-	if($$F{sha256sumRead2}){print "$$F{strain}_2.fastq\n$$F{strain}_2.fastq.sha256"} \
-	if($$F{sha256sumAssembly}){print "$$F{strain}.fasta\n$$F{strain}.fasta.sha256"} \
-	END{print "trees.dnd\nprefetch.done\nsha256sum.log";}' \
+	if($$F{sha256sumRead1} && $$F{sha256sumRead1} ne "-"){print "$$F{strain}_1.fastq\n$$F{strain}_1.fastq.sha256"} \
+	if($$F{sha256sumRead2} && $$F{sha256sumRead1} ne "-"){print "$$F{strain}_2.fastq\n$$F{strain}_2.fastq.sha256"} \
+	if($$F{genBankAssembly} && $$F{genBankAssembly} ne "-"){print "$$F{strain}.fasta\n$$F{strain}.fasta.sha256"} \
+	END{print "prefetch.done\nsha256sum.log";}' \
 	)
+# TODO include tree.dnd if not "-"
 
 sha256_files := $(shell echo "$(MANIFEST)" | tr ' ' '\n' | grep '\.sha256$$')
 
@@ -45,9 +46,8 @@ trees.dnd:
 prefetch.done: 
 	SRA_runs=$$(cut -f $(SRR_idx) in.tsv | grep '^SR[RED]') && \
 	num_SRA_runs=$$(echo "$$SRA_runs" | wc -l) && \
-	if [[ "$$num_SRA_runs" -gt 0 ]]; then \
-		echo "$$SRA_runs" | xargs -n 50 -P 1 prefetch; \
-	fi
+	if [[ "$$num_SRA_runs" -gt 0 ]]; then echo "$$SRA_runs" | xargs -n 50 -P 1 prefetch; fi; 
+	#if [[ "$$num_SRA_runs" -eq 0 ]]; then true; fi
 	touch $@
 
 sha256sum.log: $(sha256_files)

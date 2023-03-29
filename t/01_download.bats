@@ -45,11 +45,10 @@ note "DEBUG: resetting bats tmp dir"; export BATS_SUITE_TMPDIR="./tmp"
   note `make -C $BATS_SUITE_TMPDIR MANIFEST`
   target=$(cat $BATS_SUITE_TMPDIR/MANIFEST);
 
-  # basically make one target at a time
-  for t in $target; do
-    note "Making target: $t"
-    make -C $BATS_SUITE_TMPDIR $t
-  done
+  make -j $NUMCPUS -C $BATS_SUITE_TMPDIR $target
+
+  note "About to delete the tmp dir $BATS_SUITE_TMPDIR"
+  sleep 5
 
   rm -vr $BATS_SUITE_TMPDIR/*
 }
