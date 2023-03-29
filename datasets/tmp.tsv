@@ -1,0 +1,9 @@
+source	CDC Enteric Diseases Laboratory Branch							
+pmid	36036604,35727013,35416692							
+dataType	ONT dataset for assembly and AMR							
+tree	-							
+								
+SRArun_acc	biosample_acc	genbankAssembly	sha256sumAssembly	sha256sumRead1	sha256sumRead2	strain	AMR_genotype	Plasmids
+-	SAMN08773116	GCA_010931375.2	233f981abc2d5b265a63a312f13d2af882f2de5d2cded825a6ff0c186838e62a	e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855	e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855	PNUSAS034908	"mdsB,mdsA,golT,golS,sodC1,gyrA_D87N,sinH,iroB,iroC,blaCMY-2,mcr-1.1"	"IncFIB(S),IncFII(S),IncI1,IncX4"
+-	SAMN08885897	GCA_007567795.2	ee8061ca496e6460cbae50ef755732bfeafb4619d20c880c7cec1ebffee93040	e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855	e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855	PNUSAS037276	"sinH,gyrA_D87N,sodC1,mdsB,mdsA,golT,golS,iroC,iroB,mcr-1.1"	"IncFIB(S),IncFII(S),IncX4"
+  
