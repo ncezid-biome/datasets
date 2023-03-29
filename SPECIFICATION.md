@@ -27,6 +27,7 @@ The keys are case-insensitive, but the values are case-sensitive.  The order of 
 | tree         | This is a URL to the newick-formatted tree.  This tree serves as a guide to future analyses. | `https://...` |
 | source       | Where did this dataset come from? | Cheryl Tarr |
 | intendedUsage| How do you think others will use this dataset? | cluster analysis |
+| dataType     | A description of the data | Outbreak clade and one outgroup with Illumina only |
 
 ### blank row
 
@@ -44,8 +45,9 @@ but they will not affect the `GenfsGopher` script from working.
 ### Sample information
 
 Some fields are required and are marked with :heavy_check_mark:.
-Other fields are optional but require `NA` or `-` if the information is not present. These fields are marked with :eight_spoked_asterisk:.
-Other fields are optional and are marked with :negative_squared_cross_mark:.
+Other fields are optional but require `-` if the information is not present. These fields are marked with :eight_spoked_asterisk:.
+Other fields are optional and are marked with :negative_squared_cross_mark:. You must use `-` to indicate absence.
+Previous versions of this repo allowed for `NA` but in the current version, `-` is required for absent data.
 
 | Field         | Required? | Description | example    |
 | ------------- | --------- | ----------- | ---------- |
@@ -62,13 +64,15 @@ Other fields are optional and are marked with :negative_squared_cross_mark:.
 | `nucleotide` | :eight_spoked_asterisk: | A single nucleotide accession. This is sometimes an alternative to an assembly especially for one-contig genomes. | |
 | `sha256sumnucleotide` | :eight_spoked_asterisk: | a checksum for the single nucleotide accession. |  |
 | `amplicon_strategy` | :negative_squared_cross_mark: | which amplicon strategy was used? | `ARTIC V3`|
+| `AMR_genotype`  | :negative_squared_cross_mark: | The antimicrobial resistance genotype comma separated | `mdsB,mdsA,golT` |
+| `Plasmids`    | :negative_squared_cross_mark: | Plasmids present, comma separated | `IncFIB(S),IncFII(S),IncX4` |
 
 ## Creating hashsums
 
 This specification uses sha256 to calculate hashsums.
-To create a hashsum on a file, e.g., file.fastq.gz, run the following
+To create a hashsum on a file, e.g., file.fastq, run the following
 
-    sha256sum file.fastq.gz
+    sha256sum file.fastq
 
 We include a script `adjustHashsums.pl` to help create hashsums automatically in the spreadsheet.
 Here are the suggested steps:

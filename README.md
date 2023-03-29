@@ -1,8 +1,22 @@
 # Datasets
-Toy datasets for fast Oxford Nanopore assembly
+Toy and benchmark datasets
 
 ## Purpose
-We wish to put together a set of Oxford Nanopore data that is fast to assemble.
+
+### Benchmark datasets
+We wish to put together a set of data that, after assembly,
+the results can be compared back.
+These results can include actual assemblies or profiling such as MLST.
+There are several advantages including
+
+* Workshops and trainings
+* Proficiency testing
+* Certifications
+* Bioinformatics workflow development
+* Baseline comparison between bioinformatics pipelines
+
+### Toy datasets
+We wish to put together a set of data that is fast to assemble.
 There are several advantages including
 
 * Fast to test new bioinformatics workflows
@@ -13,6 +27,7 @@ There are several advantages including
 | Dataset  | Name | Description | Intended Use |tsv name | Reference |
 | ------------- | ------------- | ------------- | ------------- | ------------- | ----------| 
 | 1 | Staphylococcus aureus | hybrid Nanopore R9.4.1 and Illumina near-reference quality assembled Staphylococcus aureus whole genomes isolated from sinus swabs from Chronic Rhinosinusitis Patients, along with their plasmids. | Fast assembly of bacterial genomes with AMR | toy-bacteria-saureus.tsv | [PRJNA914892](https://ncbi.nlm.nih.gov/bioproject/PRJNA914892) |
+| 2 | Salmonella AMR | A set of _Salmonella enterica_ genomes sequenced by ONT from three different publications. | Assembly and then confirmation of AMR results | Salmonella-AMR.tsv | |
 
 ## Installation & Usage
 

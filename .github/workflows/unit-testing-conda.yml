@@ -5,19 +5,22 @@ jobs:
   build:
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         os: ['ubuntu-20.04' ]
         perl: [ '5.36.0' ]
         DATASET: 
           - datasets/toy-bacteria-saureus.tsv
+          - datasets/Salmonella-AMR.tsv
         NUM_PER_CHUNK:
-          - 25
-        #CHUNK: [25, 50, 75, 100, 125, 150, 175, 200, 225, 250, 275, 300, 325, 350, 375, 400]
-        CHUNK: [25]
+          - 1
+        # CHUNK is a set of numbers in increments of NUM_PER_CHUNK which exceeds the number
+        # of samples in any given dataset.
+        CHUNK: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40]
     defaults:
       run:
         shell: bash -el {0}
-    name: Chunk ${{ matrix.CHUNK }}, Perl ${{ matrix.perl }} on ${{ matrix.os }}
+    name: Chunk ${{ matrix.CHUNK }}, Dataset ${{ matrix.DATASET }}
     steps:
       - name: Get Date
         id: get-date
@@ -103,12 +106,21 @@ jobs:
 
           # If we have zero samples, just exit with pass
           NUM_SAMPLES=$(wc -l < $DATASET.body)
+
+          echo "======"
+          cat $DATASET
+          echo "======"
+          echo
+
+          echo "DATASET CHUNK $DATASET"
+          echo "  ...with $NUM_SAMPLES samples"
           if [[ $NUM_SAMPLES -lt 1 ]]; then
             echo "Number of samples is zero; exiting with pass"
-            exit 0
+          else
+            # Save a bit of time not running the 00.env.bats test again.
+            # Avoid running it by renaming it.
+            mv -nv t/00_env.bats t/00_env.bats.bak
+            # Run the TAP compliant unit test(s) which reads env variable $DATASET
+            bats t/*
           fi
-
-          # Run the TAP compliant unit test which reads env variable $DATASET
-          echo "DATASET CHUNK $DATASET"
-          bats t/*
 

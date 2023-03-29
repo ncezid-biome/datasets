@@ -1,0 +1,104 @@
+SHELL := /bin/bash
+MAKEFLAGS += --no-builtin-rules
+MAKEFLAGS += --no-builtin-variables
+export PATH := /scicomp/home-pure/gzu2/src/datasets-ncezid-biome/scripts:$(PATH)
+
+# Get index of some columns in the spreadsheet
+SRR_idx := $(shell grep biosample_acc in.tsv | tr '\t' '\n' | grep -in SRArun_acc | cut -f 1 -d:)
+biosample_acc_idx := $(shell grep biosample_acc in.tsv | tr '\t' '\n' | grep -in biosample_acc | cut -f 1 -d:)
+strain_acc_idx := $(shell grep biosample_acc in.tsv | tr '\t' '\n' | grep -in strain | cut -f 1 -d:)
+assembly_acc_idx := $(shell grep biosample_acc in.tsv | tr '\t' '\n' | grep -in genbankAssembly | cut -f 1 -d:)
+zero_byte_hash := $(shell echo -n '' | sha256sum | cut -f 1 -d ' ')
+
+# Understand what files we'll download via the spreadsheet
+MANIFEST := $(shell grep -A 999999 biosample_acc in.tsv | perl -MData::Dumper -lane '\
+	BEGIN{my $$h=<>; chomp($$h); @header=split(/\t/, lc($$h));} \
+	@F{@header} = @F; \
+	if($$F{sha256sumread1} && $$F{sha256sumread1} ne "-" && $$F{srarun_acc} ne "-"){print "$$F{strain}_1.fastq\n$$F{strain}_1.fastq.sha256"} \
+	if($$F{sha256sumread2} && $$F{sha256sumread1} ne "-" && $$F{srarun_acc} ne "-"){print "$$F{strain}_2.fastq\n$$F{strain}_2.fastq.sha256"} \
+	if($$F{genbankassembly} && $$F{sha256sumassembly} ne "-" && $$F{genbankassembly} ne "-"){print "$$F{strain}.fasta\n$$F{strain}.fasta.sha256"} \
+	END{print "prefetch.done\nsha256sum.log";}' \
+	)
+# TODO include tree.dnd if not "-"
+
+sha256_files := $(shell echo "$(MANIFEST)" | tr ' ' '\n' | grep '\.sha256$$')
+
+MANIFEST: 
+	echo "$(MANIFEST)" | tr ' ' '\n' | grep . > $@
+	echo "MANIFEST:"
+	cat $@ | sed 's/^/  /'; echo
+
+print-manifest:
+	@echo $(MANIFEST)
+
+all: $(MANIFEST)
+	@echo "DONE! If you used this script in a publication, please cite us at github.com/WGS-standards-and-analysis/datasets"
+
+.DELETE_ON_ERROR:
+
+.DEFAULT: all
+
+.PHONY: all
+
+.PRECIOUS: %_1.fastq %_2.fastq %.fasta %.fasta.sha256 trees.dnd prefetch.done sha256sum.log %_2.fastq.sha256 %_1.fastq.sha256
+	
+trees.dnd: 
+	wget $(tree_files) > $@
+
+prefetch.done: 
+	SRA_runs=$$(cut -f $(SRR_idx) in.tsv | grep '^SR[RED]' || echo "") && \
+	num_SRA_runs=$$(echo "$$SRA_runs" | wc -l) && \
+	for run in $$SRA_runs; do prefetch $$run; done;
+	touch $@
+
+
+sha256sum.log: $(sha256_files)
+	sha256sum -c $^ > $@.bak
+	mv -v $@.bak $@
+	cat $@
+
+%_2.fastq: %_1.fastq
+	sample=$$(basename $@ _2.fastq) && \
+		biosample_acc_idx=$$(grep biosample_acc in.tsv | tr '\t' '\n' | grep -in biosample_acc | cut -f 1 -d: ) && \
+		biosample=$$(grep $$sample in.tsv | cut -f $(biosample_acc_idx) ) && \
+		SRR=$$(grep $$sample in.tsv | cut -f $(SRR_idx) ) && \
+		hash_idx=$$(grep biosample_acc in.tsv | tr '\t' '\n' | grep -in sha256sumRead2 | cut -f 1 -d: ) && \
+		hash=$$(grep $$sample in.tsv | cut -f $$hash_idx) && \
+		if [ "$$hash" = "$(zero_byte_hash)" ]; then echo "Second read in pair seems to be blank or missing due to a zero byte hash $(zero_byte_hash) (SRA Run accession: $$SRR)."; touch $@; exit 0; fi && \
+		mv -v ./$${SRR}_2.fastq '$@'
+
+%_2.fastq.sha256: %_2.fastq
+	sample=$$(basename $@ _2.fastq.sha256) && \
+		hash_idx=$$(grep biosample_acc in.tsv | tr '\t' '\n' | grep -in sha256sumRead2 | cut -f 1 -d: ) && \
+		hash=$$(grep $$sample in.tsv | cut -f $$hash_idx) && \
+		echo "$$hash  $^" > $@
+
+%_1.fastq: prefetch.done
+	@echo Downloading $@ 
+	sample=$$(basename $@ _1.fastq) && \
+		biosample=$$(grep $$sample in.tsv | cut -f $(biosample_acc_idx) ) && \
+		SRR=$$(grep $$sample in.tsv | cut -f $(SRR_idx) ) && \
+		if [ "$$SRR" = "-" ]; then echo "SRA Run accession not listed for $$sample (SRA Run accession: $$SRR)."; touch $@; exit 0; fi && \
+		fastq-dump --defline-seq '@$$ac_$$sn/$$ri' --defline-qual '+' --split-3 -O . $$SRR && \
+		mv -v $${SRR}_1.fastq $@ || \
+		mv -v $${SRR}.fastq $@
+
+%_1.fastq.sha256: %_1.fastq
+	sample=$$(basename $@ _1.fastq.sha256) && \
+		hash_idx=$$(grep biosample_acc in.tsv | tr '\t' '\n' | grep -in sha256sumRead1 | cut -f 1 -d: ) && \
+		hash=$$(grep $$sample in.tsv | cut -f $$hash_idx) && \
+		echo "$$hash  $^" > $@
+
+%.fasta.sha256: %.fasta
+	sample=$$(basename $@ .fasta.sha256) && \
+	hash_idx=$$(grep biosample_acc in.tsv | tr '\t' '\n' | grep -in sha256sumAssembly | cut -f 1 -d: ) && \
+	hash=$$(grep $$sample in.tsv | cut -f $$hash_idx) && \
+	echo "$$hash  $^" > $@
+
+%.fasta:
+	sample=$$(basename $@ .fasta) && \
+		assembly_acc=$$(grep $$sample in.tsv | cut -f $(assembly_acc_idx) ) && \
+		esearch -db assembly -query "$$assembly_acc NOT refseq[filter]" | elink -target nuccore -name assembly_nuccore_insdc | efetch -format fasta > $@.tmp
+	if [ ! -s $@.tmp ]; then echo "zero byte fasta $@.tmp"; rm -v $@.tmp; exit 1; fi;
+	mv $@.tmp $@
+
