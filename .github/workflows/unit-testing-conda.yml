@@ -12,11 +12,18 @@ jobs:
         DATASET: 
           - datasets/toy-bacteria-saureus.tsv
           - datasets/Salmonella-AMR.tsv
+          - datasets/sars-cov-2-coronahit-rapid.tsv
+          - datasets/sars-cov-2-coronahit-routine.tsv
+          - datasets/sars-cov-2-failedQC.tsv
+          - datasets/sars-cov-2-nonvoivoc.tsv
+          - datasets/sars-cov-2-SNF-A.tsv
+          - datasets/sars-cov-2-voivoc.tsv
         NUM_PER_CHUNK:
-          - 1
+          - 10
         # CHUNK is a set of numbers in increments of NUM_PER_CHUNK which exceeds the number
         # of samples in any given dataset.
-        CHUNK: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40]
+        CHUNK: [10,20,30,40]
+        #CHUNK: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40]
     defaults:
       run:
         shell: bash -el {0}
