@@ -26,7 +26,7 @@ sha256_files := $(shell echo "$(MANIFEST)" | tr ' ' '\n' | grep '\.sha256$$')
 MANIFEST: 
 	echo "$(MANIFEST)" | tr ' ' '\n' | grep . > $@
 	echo "MANIFEST:"
-	cat $@ | sed 's/^/  /'
+	cat $@ | sed 's/^/  /'; echo
 
 print-manifest:
 	@echo $(MANIFEST)
@@ -46,10 +46,9 @@ trees.dnd:
 	wget $(tree_files) > $@
 
 prefetch.done: 
-	SRA_runs=$$(cut -f $(SRR_idx) in.tsv | grep '^SR[RED]') && \
+	SRA_runs=$$(cut -f $(SRR_idx) in.tsv | grep '^SR[RED]' || echo "") && \
 	num_SRA_runs=$$(echo "$$SRA_runs" | wc -l) && \
-	if [[ "$$num_SRA_runs" -gt 0 ]]; then echo "$$SRA_runs" | xargs -n 50 -P 1 prefetch; fi; 
-	#if [[ "$$num_SRA_runs" -eq 0 ]]; then true; fi
+	for run in $$SRA_runs; do prefetch $$run; done;
 	touch $@
 
 sha256sum.log: $(sha256_files)
