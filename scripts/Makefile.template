@@ -51,6 +51,7 @@ prefetch.done:
 	for run in $$SRA_runs; do prefetch $$run; done;
 	touch $@
 
+
 sha256sum.log: $(sha256_files)
 	sha256sum -c $^ > $@.bak
 	mv -v $@.bak $@
