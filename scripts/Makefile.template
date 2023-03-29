@@ -63,24 +63,24 @@ sha256sum.log: $(sha256_files)
 %_2.fastq: %_1.fastq
 	sample=$$(basename $@ _2.fastq) && \
 		biosample_acc_idx=$$(grep biosample_acc in.tsv | tr '\t' '\n' | grep -in biosample_acc | cut -f 1 -d: ) && \
-		biosample=$$(grep $$sample in.tsv | cut -f $(biosample_acc_idx) ) && \
-		SRR=$$(grep $$sample in.tsv | cut -f $(SRR_idx) ) && \
+		biosample=$$(grep "\b$$sample\b" in.tsv | cut -f $(biosample_acc_idx) ) && \
+		SRR=$$(grep "\b$$sample\b" in.tsv | cut -f $(SRR_idx) ) && \
 		hash_idx=$$(grep biosample_acc in.tsv | tr '\t' '\n' | grep -in sha256sumRead2 | cut -f 1 -d: ) && \
-		hash=$$(grep $$sample in.tsv | cut -f $$hash_idx) && \
+		hash=$$(grep "\b$$sample\b" in.tsv | cut -f $$hash_idx) && \
 		if [ "$$hash" = "$(zero_byte_hash)" ]; then echo "Second read in pair seems to be blank or missing due to a zero byte hash $(zero_byte_hash) (SRA Run accession: $$SRR)."; touch $@; exit 0; fi && \
 		mv -v ./$${SRR}_2.fastq '$@'
 
 %_2.fastq.sha256: %_2.fastq
 	sample=$$(basename $@ _2.fastq.sha256) && \
 		hash_idx=$$(grep biosample_acc in.tsv | tr '\t' '\n' | grep -in sha256sumRead2 | cut -f 1 -d: ) && \
-		hash=$$(grep $$sample in.tsv | cut -f $$hash_idx) && \
+		hash=$$(grep "\b$$sample\b" in.tsv | cut -f $$hash_idx) && \
 		echo "$$hash  $^" > $@
 
 %_1.fastq: prefetch.done
 	@echo Downloading $@ 
 	sample=$$(basename $@ _1.fastq) && \
-		biosample=$$(grep $$sample in.tsv | cut -f $(biosample_acc_idx) ) && \
-		SRR=$$(grep $$sample in.tsv | cut -f $(SRR_idx) ) && \
+		biosample=$$(grep "\b$$sample\b" in.tsv | cut -f $(biosample_acc_idx) ) && \
+		SRR=$$(grep "\b$$sample\b" in.tsv | cut -f $(SRR_idx) ) && \
 		if [ "$$SRR" = "-" ]; then echo "SRA Run accession not listed for $$sample (SRA Run accession: $$SRR)."; touch $@; exit 0; fi && \
 		fastq-dump --defline-seq '@$$ac_$$sn/$$ri' --defline-qual '+' --split-3 -O . $$SRR && \
 		mv -v $${SRR}_1.fastq $@ || \
@@ -89,18 +89,18 @@ sha256sum.log: $(sha256_files)
 %_1.fastq.sha256: %_1.fastq
 	sample=$$(basename $@ _1.fastq.sha256) && \
 		hash_idx=$$(grep biosample_acc in.tsv | tr '\t' '\n' | grep -in sha256sumRead1 | cut -f 1 -d: ) && \
-		hash=$$(grep $$sample in.tsv | cut -f $$hash_idx) && \
+		hash=$$(grep "\b$$sample\b" in.tsv | cut -f $$hash_idx) && \
 		echo "$$hash  $^" > $@
 
 %.fasta.sha256: %.fasta
 	sample=$$(basename $@ .fasta.sha256) && \
 	hash_idx=$$(grep biosample_acc in.tsv | tr '\t' '\n' | grep -in sha256sumAssembly | cut -f 1 -d: ) && \
-	hash=$$(grep $$sample in.tsv | cut -f $$hash_idx) && \
+	hash=$$(grep "\b$$sample\b" in.tsv | cut -f $$hash_idx) && \
 	echo "$$hash  $^" > $@
 
 %.fasta:
 	sample=$$(basename $@ .fasta) && \
-		assembly_acc=$$(grep $$sample in.tsv | cut -f $(assembly_acc_idx) ) && \
+		assembly_acc=$$(grep "\b$$sample\b" in.tsv | cut -f $(assembly_acc_idx) ) && \
 		esearch -db assembly -query "$$assembly_acc NOT refseq[filter]" | elink -target nuccore -name assembly_nuccore_insdc | efetch -format fasta > $@.tmp
 	if [ ! -s $@.tmp ]; then echo "zero byte fasta $@.tmp"; rm -v $@.tmp; exit 1; fi;
 	mv $@.tmp $@
