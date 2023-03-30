@@ -28,8 +28,8 @@ sha256_files := $(shell echo "$(MANIFEST)" | tr ' ' '\n' | grep '\.sha256$$')
 
 MANIFEST: 
 	echo "$(MANIFEST)" | tr ' ' '\n' | grep . > $@
-	echo "MANIFEST:"
-	cat $@ | sed 's/^/  /'; echo
+	@echo "MANIFEST:"
+	@cat $@ | sed 's/^/  /'; echo
 
 print-manifest:
 	@echo $(MANIFEST)
