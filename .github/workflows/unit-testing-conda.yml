@@ -92,11 +92,8 @@ jobs:
       - name: unit testing - just env
         run:  |
           bats t/00_env.bats
-      - name: unit test chunk of ${{ matrix.DATASET }}
+      - name: Create spreadsheet for chunk ${{ matrix.CHUNK }} of ${{ matrix.DATASET }}
         run:  |
-          export NCBI_API_KEY=${{ secrets.NCBI_API_KEY }}
-          if [[ -z "$NCBI_API_KEY" ]]; then echo "NCBI_API_KEY not found in github secrets!"; fi;
-          
           export DATASET=$(pwd -P)/${{ matrix.DATASET }}.${{ matrix.CHUNK }}.short
           CHUNK=${{ matrix.CHUNK }}
           NUM_PER_CHUNK=${{ matrix.NUM_PER_CHUNK }}
@@ -108,16 +105,23 @@ jobs:
           #   with sed -n Xp
           FIRST_LINE=$(($CHUNK - $NUM_PER_CHUNK + 1))
           LAST_LINE=${{ matrix.CHUNK }}
-          grep -A 99999 biosample_acc ${{ matrix.DATASET }} | tail -n +2 | sed -n ${FIRST_LINE},${LAST_LINE}p >> $DATASET.body
+          grep -A 99999 biosample_acc ${{ matrix.DATASET }} | tail -n +2 | sed -n ${FIRST_LINE},${LAST_LINE}p > $DATASET.body
           cat $DATASET.body >> $DATASET
-
-          # If we have zero samples, just exit with pass
-          NUM_SAMPLES=$(wc -l < $DATASET.body)
 
           echo "======"
           cat $DATASET
           echo "======"
           echo
+          cat $DATASET
+
+      - name: unit test chunk ${{ matrix.CHUNK }} of ${{ matrix.DATASET }}
+        run:  |
+          export NCBI_API_KEY=${{ secrets.NCBI_API_KEY }}
+          if [[ -z "$NCBI_API_KEY" ]]; then echo "NCBI_API_KEY not found in github secrets!"; fi;
+          
+          export DATASET=$(pwd -P)/${{ matrix.DATASET }}.${{ matrix.CHUNK }}.short
+          # If we have zero samples, just exit with pass
+          NUM_SAMPLES=$(wc -l < $DATASET.body)
 
           echo "DATASET CHUNK $DATASET"
           echo "  ...with $NUM_SAMPLES samples"
