@@ -18,6 +18,7 @@ jobs:
           - datasets/sars-cov-2-nonvoivoc.tsv
           - datasets/sars-cov-2-SNF-A.tsv
           - datasets/sars-cov-2-voivoc.tsv
+          - datasets/Campylobacter_jejuni_0810PADBR-1.tsv
         NUM_PER_CHUNK:
           - 5
         # CHUNK is a set of numbers in increments of NUM_PER_CHUNK which exceeds the number
