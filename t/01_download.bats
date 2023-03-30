@@ -8,7 +8,7 @@ BATS_SUITE_TMPDIR=${BATS_SUITE_TMPDIR:="./tmp"}
 mkdir -pv $BATS_SUITE_TMPDIR
 
 function note(){
-  echo "# $@" >&3
+  echo "# $@" >&3 2>&3
 }
 
 note "DEBUG: resetting bats tmp dir"; export BATS_SUITE_TMPDIR="./tmp"
@@ -47,8 +47,12 @@ note "DEBUG: resetting bats tmp dir"; export BATS_SUITE_TMPDIR="./tmp"
 
   make -j $NUMCPUS -C $BATS_SUITE_TMPDIR $target
 
-  note "About to delete the tmp dir $BATS_SUITE_TMPDIR"
-  sleep 5
+  # If running this locally, give a chance to ctrl-C
+  if [ -z "$CI" ]; then
+    note "About to delete the tmp dir $BATS_SUITE_TMPDIR"
+    note "Ctrl-C to prevent the deletion"
+    sleep 5
+  fi
 
   rm -vr $BATS_SUITE_TMPDIR/*
 }

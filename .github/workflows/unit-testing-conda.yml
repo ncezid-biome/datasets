@@ -12,11 +12,18 @@ jobs:
         DATASET: 
           - datasets/toy-bacteria-saureus.tsv
           - datasets/Salmonella-AMR.tsv
+          - datasets/sars-cov-2-coronahit-rapid.tsv
+          - datasets/sars-cov-2-coronahit-routine.tsv
+          - datasets/sars-cov-2-failedQC.tsv
+          - datasets/sars-cov-2-nonvoivoc.tsv
+          - datasets/sars-cov-2-SNF-A.tsv
+          - datasets/sars-cov-2-voivoc.tsv
         NUM_PER_CHUNK:
-          - 1
+          - 5
         # CHUNK is a set of numbers in increments of NUM_PER_CHUNK which exceeds the number
         # of samples in any given dataset.
-        CHUNK: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40]
+        CHUNK: [5,10,15,20,25,30,35,40]
+        #CHUNK: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40]
     defaults:
       run:
         shell: bash -el {0}
@@ -85,11 +92,8 @@ jobs:
       - name: unit testing - just env
         run:  |
           bats t/00_env.bats
-      - name: unit test chunk of ${{ matrix.DATASET }}
+      - name: Create spreadsheet for chunk ${{ matrix.CHUNK }} of ${{ matrix.DATASET }}
         run:  |
-          export NCBI_API_KEY=${{ secrets.NCBI_API_KEY }}
-          if [[ -z "$NCBI_API_KEY" ]]; then echo "NCBI_API_KEY not found in github secrets!"; fi;
-          
           export DATASET=$(pwd -P)/${{ matrix.DATASET }}.${{ matrix.CHUNK }}.short
           CHUNK=${{ matrix.CHUNK }}
           NUM_PER_CHUNK=${{ matrix.NUM_PER_CHUNK }}
@@ -101,16 +105,23 @@ jobs:
           #   with sed -n Xp
           FIRST_LINE=$(($CHUNK - $NUM_PER_CHUNK + 1))
           LAST_LINE=${{ matrix.CHUNK }}
-          grep -A 99999 biosample_acc ${{ matrix.DATASET }} | tail -n +2 | sed -n ${FIRST_LINE},${LAST_LINE}p >> $DATASET.body
+          grep -A 99999 biosample_acc ${{ matrix.DATASET }} | tail -n +2 | sed -n ${FIRST_LINE},${LAST_LINE}p > $DATASET.body
           cat $DATASET.body >> $DATASET
 
-          # If we have zero samples, just exit with pass
-          NUM_SAMPLES=$(wc -l < $DATASET.body)
-
           echo "======"
-          cat $DATASET
+          echo "$DATASET"
           echo "======"
           echo
+          cat $DATASET
+
+      - name: unit test chunk ${{ matrix.CHUNK }} of ${{ matrix.DATASET }}
+        run:  |
+          export NCBI_API_KEY=${{ secrets.NCBI_API_KEY }}
+          if [[ -z "$NCBI_API_KEY" ]]; then echo "NCBI_API_KEY not found in github secrets!"; fi;
+          
+          export DATASET=$(pwd -P)/${{ matrix.DATASET }}.${{ matrix.CHUNK }}.short
+          # If we have zero samples, just exit with pass
+          NUM_SAMPLES=$(wc -l < $DATASET.body)
 
           echo "DATASET CHUNK $DATASET"
           echo "  ...with $NUM_SAMPLES samples"
