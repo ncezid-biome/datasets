@@ -14,11 +14,11 @@ zero_byte_hash := $(shell echo -n '' | sha256sum | cut -f 1 -d ' ')
 tree_files := $(shell grep -B 9999 biosample_acc in.tsv | grep tree | cut -f 2)
 
 # Understand what files we'll download via the spreadsheet
-MANIFEST := $(shell grep -A 999999 biosample_acc in.tsv | perl -F'\t' -MData::Dumper -lane '\
+MANIFEST := $(shell grep -i -A 999999 biosample_acc in.tsv | perl -F'\t' -MData::Dumper -lane '\
 	BEGIN{my $$h=<>; chomp($$h); @header=split(/\t/, lc($$h));} \
 	@F{@header} = @F; \
 	if($$F{sha256sumread1} && $$F{sha256sumread1} ne "-" && $$F{srarun_acc} ne "-"){print "$$F{strain}_1.fastq\n$$F{strain}_1.fastq.sha256"} \
-	if($$F{sha256sumread2} && $$F{sha256sumread1} ne "-" && $$F{srarun_acc} ne "-"){print "$$F{strain}_2.fastq\n$$F{strain}_2.fastq.sha256"} \
+	if($$F{sha256sumread2} && $$F{sha256sumread2} ne "-" && $$F{srarun_acc} ne "-"){print "$$F{strain}_2.fastq\n$$F{strain}_2.fastq.sha256"} \
 	if($$F{genbankassembly} && $$F{sha256sumassembly} ne "-" && $$F{genbankassembly} ne "-"){print "$$F{strain}.fasta\n$$F{strain}.fasta.sha256"} \
 	END{print "prefetch.done\nsha256sum.log";}' \
 	)
