@@ -56,6 +56,13 @@ note "DEBUG: resetting bats tmp dir"; export BATS_SUITE_TMPDIR="./tmp"
       if [ "$i" == "sha256sum.log" ]; then
         hashsums=$(cat $BATS_SUITE_TMPDIR/sha256sum.log.bak)
         note $hashsums
+
+        for j in $BATS_SUITE_TMPDIR/*.sha256; do 
+          b=$(basename $j .sha256)
+          note `cat $j`
+          note `sha256sum $BATS_SUITE_TMPDIR/$b;`
+          note ""
+        done
       fi
       # Trigger a bats error
       false
