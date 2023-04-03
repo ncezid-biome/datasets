@@ -35,7 +35,7 @@ print-manifest:
 	@echo $(MANIFEST)
 
 all: $(MANIFEST)
-	@echo "DONE! If you used this script in a publication, please cite us at github.com/WGS-standards-and-analysis/datasets"
+	@echo "DONE! Please remember to cite the relevant publication(s) as listed at https://github.com/ncezid-biome/datasets"
 
 .DELETE_ON_ERROR:
 
