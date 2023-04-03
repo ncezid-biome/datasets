@@ -9,6 +9,7 @@ mkdir -pv $BATS_SUITE_TMPDIR
 
 function note(){
   echo "# $@" >&3 2>&3
+  stdbuf -i0 -o0 -e0 echo -ne "" >&3
 }
 
 note "DEBUG: resetting bats tmp dir"; export BATS_SUITE_TMPDIR="./tmp"
@@ -44,8 +45,22 @@ note "DEBUG: resetting bats tmp dir"; export BATS_SUITE_TMPDIR="./tmp"
   note `cp -v $DATASET $BATS_SUITE_TMPDIR/in.tsv`
   note `make -C $BATS_SUITE_TMPDIR MANIFEST`
   target=$(cat $BATS_SUITE_TMPDIR/MANIFEST);
+  note "$target"
+  note ""
 
-  make -j $NUMCPUS -C $BATS_SUITE_TMPDIR $target
+  for i in $target; do 
+    note "target: $i"
+    run make -j $NUMCPUS -C $BATS_SUITE_TMPDIR $i
+    note "$output"
+    if [ "$status" -ne 0 ]; then
+      if [ "$i" == "sha256sum.log" ]; then
+        hashsums=$(cat $BATS_SUITE_TMPDIR/sha256sum.log.bak)
+        note $hashsums
+      fi
+      # Trigger a bats error
+      false
+    fi
+  done
 
   # If running this locally, give a chance to ctrl-C
   if [ -z "$CI" ]; then
