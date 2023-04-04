@@ -2,6 +2,7 @@
 
 # https://github.com/bats-core/bats-core
 
+load "inc/environment"
 
 BATS_SUITE_TMPDIR=${BATS_SUITE_TMPDIR:="./tmp"}
 mkdir -pv $BATS_SUITE_TMPDIR
