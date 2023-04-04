@@ -134,6 +134,9 @@ If you do not have sha256sum (e.g., if you are on MacOS), then try to make the s
 This shell function will need to be defined in the current session. To make it permanent for future sessions, add it to `$HOME/.bashrc`.
 
 ## Downloading a dataset
+
+### Stable
+
 To run, you need a dataset in tsv format.  Here is the usage statement:
 
     Usage: GenFSGopher.pl -o outdir spreadsheet.dataset.tsv
@@ -155,6 +158,24 @@ To run, you need a dataset in tsv format.  Here is the usage statement:
     --version             Print the version and exit
     --help                Print the usage statement and die
 
+### Future
+
+We are making the new method for downloading a dataset out of `Make`.
+To run this workflow and download the data, make a blank directory and copy over two files like so.
+
+```bash
+# Change these variables to your liking
+OUTDIR="toy-dataset.out"
+DATASET="dataset/toy-bacteria-saureus.tsv"
+NUMCPUS=4
+
+mkdir $OUTDIR
+cp -v $DATASET $OUTDIR/in.tsv
+cp -v scripts/Makefile.template $OUTDIR/Makefile
+make -j $NUMCPUS -C $OUTDIR all
+
+```
+
 ## Using a dataset
 
 There is a field `intendedUse` which suggests how a particular dataset might be used.  For example, Epi-validated outbreak datasets might be used with a SNP-based or MLST-based workflow.  As the number of different values for `intendedUse` increases, other use-cases will be available.  Otherwise, how you use a dataset is up to you!
@@ -167,7 +188,9 @@ Then view the [specification](SPECIFICATION.md).
 
 ## Citation
 
-If this project has helped you, please cite both this website and the original publication:
+If this project has helped you, please cite both this website and the relevant study(ies) in the table(s) above.
+
+The original publication can be found in 
 
 Timme, Ruth E., et al. "Benchmark datasets for phylogenomic pipeline validation, applications for foodborne pathogen surveillance." PeerJ 5 (2017): e3893.
 
