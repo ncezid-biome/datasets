@@ -29,10 +29,10 @@ jobs:
           - datasets/sars-cov-2-voivoc.tsv
           - datasets/toy-bacteria-saureus.tsv
         NUM_PER_CHUNK:
-          - 120 
+          - 20
         # CHUNK is a set of numbers in increments of NUM_PER_CHUNK which exceeds the number
         # of samples in any given dataset.
-        CHUNK: [120]
+        CHUNK: [20]
         #CHUNK: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40]
     defaults:
       run:
@@ -94,7 +94,7 @@ jobs:
           echo
           which bats
       - name: checkout my repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: apt-get install
         run:  |
           sudo apt-get update
@@ -124,7 +124,7 @@ jobs:
           echo
           cat $DATASET
 
-      - name: unit test chunk ${{ matrix.CHUNK }} of ${{ matrix.DATASET }}
+      - name: ${{ matrix.DATASET }}, chunk ${{ matrix.CHUNK }}
         run:  |
           export NCBI_API_KEY=${{ secrets.NCBI_API_KEY }}
           if [[ -z "$NCBI_API_KEY" ]]; then echo "NCBI_API_KEY not found in github secrets!"; fi;
