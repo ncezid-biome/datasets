@@ -62,6 +62,6 @@ note "DEBUG: resetting bats tmp dir"; export BATS_SUITE_TMPDIR="./tmp"
     sleep 5
   fi
 
-  rm -vr $BATS_SUITE_TMPDIR/*
+  rm -rvf $BATS_SUITE_TMPDIR/*
 }
 
