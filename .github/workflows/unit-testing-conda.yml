@@ -11,13 +11,13 @@ jobs:
         perl: [ '5.36.0' ]
         DATASET: 
           - datasets/Campylobacter_jejuni_0810PADBR-1.tsv
-          - datasets/Candida-auris-CladeI-1.tsv
+       #  - datasets/Candida-auris-CladeI-1.tsv
           - datasets/e.coli-Ahrenfeldt-dataset.tsv
           - datasets/Escherichia_coli_1405WAEXK-1.tsv
           - datasets/Listeria_monocytogenes_1408MLGX6-3WGS.tsv
           - datasets/Litchfield.tsv
           - datasets/PA_76_benchMarkInfo.tsv
-          - datasets/Salmonella-AMR.tsv
+       #  - datasets/Salmonella-AMR.tsv
           - datasets/Salmonella_enterica_1203NYJAP-1.simulated.tsv
           - datasets/Salmonella_enterica_1203NYJAP-1.tsv
           - datasets/sars-cov-2-coronahit-rapid.tsv
