@@ -48,7 +48,9 @@ note "DEBUG: resetting bats tmp dir"; export BATS_SUITE_TMPDIR="./tmp"
   note "$target"
   note ""
 
-  run make -j $NUMCPUS -C $BATS_SUITE_TMPDIR sha256.verification
+  # Cheat the makefile a bit by making it believe prefetching is all completed
+  touch $BATS_SUITE_TMPDIR/prefetch.done
+  run make --debug -j $NUMCPUS -C $BATS_SUITE_TMPDIR sha256.verification
   note "$output"
   if [ "$status" -ne 0 ]; then
     note "ERROR with make sha256.verification"
