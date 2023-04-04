@@ -2,7 +2,7 @@
 
 # https://github.com/bats-core/bats-core
 
-load "inc/environment"
+#load "inc/environment"
 
 BATS_SUITE_TMPDIR=${BATS_SUITE_TMPDIR:="./tmp"}
 mkdir -pv $BATS_SUITE_TMPDIR
@@ -34,7 +34,7 @@ note "DEBUG: resetting bats tmp dir"; export BATS_SUITE_TMPDIR="./tmp"
   note "DATASET: $DATASET"
 }
 
-@test "download dataset" {
+@test "verify dataset" {
   if [[ -z "$DATASET" ]]; then
     note "No dataset was found in the environment variable DATASET"
     false
