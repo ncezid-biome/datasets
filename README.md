@@ -23,11 +23,55 @@ There are several advantages including
 * Fast to teach new people ONT assembly
 * Fast to teach people bioinformatics workflows in a workshop setting
 
-## Summary Table
+## Summary Tables
+
+### EDLB
+
+This first table lists datasets curated from the Enteric Diseases Laboratory Branch at CDC
+
 | Dataset  | Name | Description | Intended Use |tsv name | Reference |
 | ------------- | ------------- | ------------- | ------------- | ------------- | ----------| 
 | 1 | Staphylococcus aureus | hybrid Nanopore R9.4.1 and Illumina near-reference quality assembled Staphylococcus aureus whole genomes isolated from sinus swabs from Chronic Rhinosinusitis Patients, along with their plasmids. | Fast assembly of bacterial genomes with AMR | toy-bacteria-saureus.tsv | [PRJNA914892](https://ncbi.nlm.nih.gov/bioproject/PRJNA914892) |
 | 2 | Salmonella AMR | A set of _Salmonella enterica_ genomes sequenced by ONT from three different publications. | Assembly and then confirmation of AMR results | Salmonella-AMR.tsv | |
+
+### Gen-FS
+
+Collaboration on the [Genomics for Food and Feed Safety (Gen-FS)](https://www.sciencedirect.com/science/article/pii/S0362028X22067680)
+
+If using these datasets, please cite [Timme et al 2017](https://peerj.com/articles/3893/).
+
+| Dataset  | Name | Description | Intended Use |tsv name | Reference |
+| ------------- | ------------- | ------------- | ------------- | ------------- | ----------| 
+| 1        | Stone Fruit Food recall | An outbreak of L. monocytogenes| Outbreak analysis | Listeria_monocytogenes_1408MLGX6-3WGS.tsv | PMID: 27694232 |
+| 2        | Spicy Tuna outbreak | An outbreak of S. enterica | Outbreak analysis | Salmonella_enterica_1203NYJAP-1.tsv | PMID: 25995194 |
+| 3        | Simulated outbreak | A simulated outbreak of S. enterica | Outbreak analysis | Salmonella_enterica_1203NYJAP-1.simulated.tsv | [Timme et al 2017](https://peerj.com/articles/3893/) |
+| 4        | Raw Milk outbreak | C. jejuni outbreak | Outbreak analysis | Campylobacter_jejuni_0810PADBR-1.tsv | <http://www.outbreakdatabase.com/details/hendricks-farm-and-dairy-raw-milk-2008> |
+| 5        | Sprouts Outbreak | E. coli outbreak | Outbreak analysis | Escherichia_coli_1405WAEXK-1.tsv | <http://www.cdc.gov/ecoli/2014/o121-05-14/index.html> |
+
+### SARS-CoV-2 datasets
+
+From <https://github.com/CDCgov/datasets-sars-cov-2/>
+
+If you use these datasets, please cite [Xiaoli et al](https://peerj.com/articles/13821).
+
+| Dataset  | Name | Description | Intended Use |tsv name | Primer Set | Reference
+| ------------- | ------------- | ------------- | ------------- | ------------- | ----------| ------------- |
+| 1 | Boston Outbreak   | A cohort of 63 samples from a real outbreak with three introductions, Illumina platform, metagenomic approach  | To understand the features of virus transmission during real outbreak setting, metagenomic sequencing   | sars-cov-2-SNF-A.tsv | NA |[Lemieux et al.](https://www.science.org/doi/10.1126/science.abe3261)
+| 2 | CoronaHiT rapid   | A cohort of 39 samples prepared by different wet-lab approaches and sequenced at two platforms (Illumina vs MinIon) with MinIon running for 18 hrs, amplicon-based approach  | To verify that a bioinformatics pipeline finds virtually no differences between platforms of the same genome, outbreak setting  |sars-cov-2-coronahit-rapid.tsv | ARTIC_V3|[Baker et al.](https://genomemedicine.biomedcentral.com/articles/10.1186/s13073-021-00839-5)
+| 3 | CoronaHiT routine | A cohort of 69 samples prepared by different wet-lab approaches and sequenced at two platforms (Illumina vs MinIon) with MinIon running for 30 hrs, amplicon-based approach  | To verify that a bioinformatics pipeline finds virtually no differences between platforms of the same genome, routinue surveillance  |sars-cov-2-coronahit-routine.tsv | ARTIC_V3|[Baker et al.](https://genomemedicine.biomedcentral.com/articles/10.1186/s13073-021-00839-5)
+| 4 | VOI/VOC lineages  | A cohort of 16 samples from 10 representative CDC defined VOI/VOC lineages as of 06/15/2021, Illumina platform, amplicon-based approach  | To benchmark lineage-calling bioinformatics pipeline especially for VOI/VOCs, bioinformatics pipeline validation  |sars-cov-2-voivoc.tsv | ARTIC_V3 | Xiaoli et al 
+| 5 | Non-VOI/VOC lineages | A cohort of 39 samples from representative non VOI/VOC lineages as of 05/30/2021, Illumina platform, amplicon-based approach | To benchmark lineage-calling pipeline nonspecific to VOI/VOCs, bioinformatics pipeline validation  |sars-cov-2-nonvoivoc.tsv | ARTIC_V3: 34,  ARTIC_V1: 2, RandomPrimer-SSIV_NexteraXT: 2,  NA: 1| Xiaoli et al
+| 6 | Failed QC | A cohort of 24 samples failed basic QC metrics, covering 8 possible failure scenarios, Illumina platform, amplicon-based approach  | To serve as controls to test bioinformatics quality control cutoffs |sars-cov-2-failedQC.tsv | ARTIC_V3: 5, CDC in house multiplex PCR primers ([Paden et al.](https://wwwnc.cdc.gov/eid/article/26/10/20-1800_article)): 19| Xiaoli et al
+
+### GMI
+
+Global Microbial Identifier
+
+| Dataset  | Name | Description | Intended Use |tsv name | Reference |
+| ------------- | ------------- | ------------- | ------------- | ------------- | ----------| 
+| 1        | Ahrenfeldt E. coli | An evolution experiment | phylogenomic pipeline validation | e.coli-Ahrenfeldt-dataset.tsv | [PMC5217230](https://pubmed.ncbi.nlm.nih.gov/28056767) |
+| 2        | Legionella outbreak | Philadelphia 1976 Legionaire's outbreak | Outbreak dataset | PA_76_benchMarkInfo.tsv | [DOI/10.1371](https://doi.org/10.1371/journal.pone.0164074) |
+
 
 ## Installation & Usage
 
@@ -90,6 +134,9 @@ If you do not have sha256sum (e.g., if you are on MacOS), then try to make the s
 This shell function will need to be defined in the current session. To make it permanent for future sessions, add it to `$HOME/.bashrc`.
 
 ## Downloading a dataset
+
+### Stable
+
 To run, you need a dataset in tsv format.  Here is the usage statement:
 
     Usage: GenFSGopher.pl -o outdir spreadsheet.dataset.tsv
@@ -111,6 +158,24 @@ To run, you need a dataset in tsv format.  Here is the usage statement:
     --version             Print the version and exit
     --help                Print the usage statement and die
 
+### Future
+
+We are making the new method for downloading a dataset out of `Make`.
+To run this workflow and download the data, make a blank directory and copy over two files like so.
+
+```bash
+# Change these variables to your liking
+OUTDIR="toy-dataset.out"
+DATASET="dataset/toy-bacteria-saureus.tsv"
+NUMCPUS=4
+
+mkdir $OUTDIR
+cp -v $DATASET $OUTDIR/in.tsv
+cp -v scripts/Makefile.template $OUTDIR/Makefile
+make -j $NUMCPUS -C $OUTDIR all
+
+```
+
 ## Using a dataset
 
 There is a field `intendedUse` which suggests how a particular dataset might be used.  For example, Epi-validated outbreak datasets might be used with a SNP-based or MLST-based workflow.  As the number of different values for `intendedUse` increases, other use-cases will be available.  Otherwise, how you use a dataset is up to you!
@@ -123,7 +188,9 @@ Then view the [specification](SPECIFICATION.md).
 
 ## Citation
 
-If this project has helped you, please cite both this website and the original publication:
+If this project has helped you, please cite both this website and the relevant study(ies) in the table(s) above.
+
+The original publication can be found in 
 
 Timme, Ruth E., et al. "Benchmark datasets for phylogenomic pipeline validation, applications for foodborne pathogen surveillance." PeerJ 5 (2017): e3893.
 

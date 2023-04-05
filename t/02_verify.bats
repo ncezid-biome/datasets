@@ -9,6 +9,7 @@ mkdir -pv $BATS_SUITE_TMPDIR
 
 function note(){
   echo "# $@" >&3 2>&3
+  stdbuf -i0 -o0 -e0 echo -ne "" >&3
 }
 
 note "DEBUG: resetting bats tmp dir"; export BATS_SUITE_TMPDIR="./tmp"
@@ -33,7 +34,7 @@ note "DEBUG: resetting bats tmp dir"; export BATS_SUITE_TMPDIR="./tmp"
   note "DATASET: $DATASET"
 }
 
-@test "download dataset" {
+@test "verify dataset" {
   if [[ -z "$DATASET" ]]; then
     note "No dataset was found in the environment variable DATASET"
     false
@@ -44,8 +45,17 @@ note "DEBUG: resetting bats tmp dir"; export BATS_SUITE_TMPDIR="./tmp"
   note `cp -v $DATASET $BATS_SUITE_TMPDIR/in.tsv`
   note `make -C $BATS_SUITE_TMPDIR MANIFEST`
   target=$(cat $BATS_SUITE_TMPDIR/MANIFEST);
+  note "$target"
+  note ""
 
-  make -j $NUMCPUS -C $BATS_SUITE_TMPDIR $target
+  # Cheat the makefile a bit by making it believe prefetching is all completed
+  touch $BATS_SUITE_TMPDIR/prefetch.done
+  run make --debug -j $NUMCPUS -C $BATS_SUITE_TMPDIR sha256.verification
+  note "$output"
+  if [ "$status" -ne 0 ]; then
+    note "ERROR with make sha256.verification"
+    false
+  fi
 
   # If running this locally, give a chance to ctrl-C
   if [ -z "$CI" ]; then
@@ -54,6 +64,6 @@ note "DEBUG: resetting bats tmp dir"; export BATS_SUITE_TMPDIR="./tmp"
     sleep 5
   fi
 
-  rm -vr $BATS_SUITE_TMPDIR/*
+  rm -rvf $BATS_SUITE_TMPDIR/*
 }
 

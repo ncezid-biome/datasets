@@ -76,6 +76,11 @@ sha256sum.log: $(sha256_files)
 		hash=$$(grep "\b$$sample\b" in.tsv | cut -f $$hash_idx) && \
 		echo "$$hash  $^" > $@
 
+%.prefetched:
+	SRR=$$(basename $@ .prefetched) && \
+		prefetch $$SRR && \
+		touch $@
+
 %_1.fastq: prefetch.done
 	@echo Downloading $@ 
 	sample=$$(basename $@ _1.fastq) && \
@@ -104,4 +109,44 @@ sha256sum.log: $(sha256_files)
 		esearch -db assembly -query "$$assembly_acc NOT refseq[filter]" | elink -target nuccore -name assembly_nuccore_insdc | efetch -format fasta > $@.tmp
 	if [ ! -s $@.tmp ]; then echo "zero byte fasta $@.tmp"; rm -v $@.tmp; exit 1; fi;
 	mv $@.tmp $@
+
+# Have some ".verified" files to help us check files one
+# at a time to save on hard drive space.
+# These targets remove the fastq or fasta dependency file.
+%_1.fastq.verified: %_1.fastq %_1.fastq.sha256
+	sample=$$(basename $@ _1.fastq.verified) && \
+		SRR=$$(grep "\b$$sample\b" in.tsv | cut -f $(SRR_idx) ) && \
+		fastq=$$(basename $@ .verified) && \
+		prefetch $$SRR && \
+		sha256sum $$fastq > $@.tmp && \
+		sha256sum -c $$fastq.sha256 >> $@.tmp && \
+		mv $@.tmp $@ && \
+		rm -rvf $$SRR
+	# Remove the fastq file to help save space
+	rm -v $<
+%_2.fastq.verified: %_2.fastq %_2.fastq.sha256
+	sample=$$(basename $@ _2.fastq.verified) && \
+		SRR=$$(grep "\b$$sample\b" in.tsv | cut -f $(SRR_idx) ) && \
+		fastq=$$(basename $@ .verified) && \
+		prefetch $$SRR && \
+		sha256sum $$fastq > $@.tmp && \
+		sha256sum -c $$fastq.sha256 >> $@.tmp && \
+		mv $@.tmp $@ && \
+		rm -rvf $$SRR
+	# Remove the fastq file to help save space
+	rm -v $<
+%.fasta.verified: %.fasta %.fasta.sha256
+	sample=$$(basename $@ .fasta.verified) && \
+		sha256sum $$sample.fasta > $@.tmp && \
+		sha256sum -c $$sample.fasta.sha256 >> $@.tmp && \
+		mv $@.tmp $@
+	# Remove the fasta file to help save space
+	rm -v $<
+sha256.verification: prefetch.done
+	for i in $(MANIFEST); do \
+		if [[ $$i != *.sha256 ]]; then continue; fi; \
+		file=$$(basename $$i .sha256); \
+		$(MAKE) $$file.verified; \
+	done
+	touch $@
 

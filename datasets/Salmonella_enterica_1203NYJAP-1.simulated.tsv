@@ -1,0 +1,32 @@
+Organism	Synthetic construct											
+Outbreak	simulated based on the tree from Salmonella 1203NYJAP-1 - Tuna Scrape Outbreak											
+pmid												
+tree	https://tree.opentreeoflife.org/curator/study/edit/ot_301/tre/tree4.tre											
+source	Ruth Timme											
+dataType	simulated											
+intendedUse	benchmark dataset with known phylogeny and SNP locations: data generated using TreeToReads. 250bp, 40X coverage, 150 var sites, S.Bareilly GCA_000439415.1 anchor genome											
+												
+biosample_acc	strain	genBankAssembly	SRArun_acc	outbreak	dataSetName	suggestedReference	sha256sumAssembly	sha256sumRead1	sha256sumRead2	fileName	voucherContact	
+SAMN04335555	SIM_CFSAN000189	GCA_000439415.2	SRR3020612	outgroup	simulated Salmonella outbreak	1	ff5a0b34d3df41e08fe75c7055b686ce3cbb00f036cb2c4a46ad2f2f935e88e2	f070f1b50ca327a66bf5ad86d81a71b029c7a5b8631b919105f6ad81de75d802	009a424dd0010a090a1e75f56874dcc26598d4761ef4a242227f410653fc8b7e			
+SAMN04335556	SIM_CFSAN000191	-	SRR3020613	outgroup	simulated Salmonella outbreak	0		14e37dda7f515e72cf4a798fb5fa4fbab259e822ca0b315bbe727ae40ac9a243	1348bf485196e2a72e8ff792434ea40f1abd4ef29a6820da3e37de6ef1d10d24			
+SAMN04335557	SIM_CFSAN000211	-	SRR3020614	outgroup	simulated Salmonella outbreak	0		12220813e95c3559cad3c9f03a266c9fdeccf23b6a2984690bfdfe25489ee505	12738807a8a14b1214aa3a7212ee0a1b8cfcfc03a94b83797382f49d9bb7356e			
+SAMN04335558	SIM_CFSAN000212	-	SRR3020615	outgroup	simulated Salmonella outbreak	0		e7da784987f9c3499756834671e7172abb5d5c6780629fa5189f433110144645	d14937477c2e046f4f52f63f86295f2e366c1e1992c141c8b6fc7074b8025107			
+SAMN04335549	SIM_CFSAN000228	-	SRR3020616	outgroup	simulated Salmonella outbreak	0		9fd8639570980787410a23c11679d2e27d47421e45440495e13e28ab6efb136b	2339e7f10bbb5930c0ace5db28a9c9fc1045df86dd01185552de267ddee10e84			
+SAMN04335550	SIM_CFSAN000661	-	SRR3020617	outbreak	simulated Salmonella outbreak	0		380231a1f73521aa02651f5e4d0c77ba86db3260812e388d525a9bae32bc4f09	1b341824135c12f4ca63597fbe207ef062c76d785b568fb941355629baa4dd41			
+SAMN04335551	SIM_CFSAN000669	-	SRR3020618	outbreak	simulated Salmonella outbreak	0		55be039734c4db8c9711d03ed65a6957f2801c6905bd68610a3fe29e46dcba75	c3b37034387e4a9d92d0f1cb21e0014d6aa1254e6795f4b44b906dcb0e7e9242			
+SAMN04335552	SIM_CFSAN000700	-	SRR3020619	outbreak	simulated Salmonella outbreak	0		50037e1079467ef425fe567b4bd50755f405ede74fac8557799f2ab6af1e96a4	d21a188b2ebc6c516b4c69c26e2e1e809eec562b068aeb70631d7b42f40caa56			
+SAMN04335553	SIM_CFSAN000752	-	SRR3020620	outbreak	simulated Salmonella outbreak	0		9f8c3ff4d9d9783f8d1b848509f5cbc57cccba36bd53bf46d095f8427677f0c1	61827c5fc751ded3e738109f6db10a02aa81d9ce7e46b08876c9474d485d441e			
+SAMN04335554	SIM_CFSAN000753	-	SRR3020621	outbreak	simulated Salmonella outbreak	0		1d9fb976625b3e28b95dacd60e488593f4ad8854a2d6e02fc32c1e0fb6d89fbd	db4f03010cb58517b79b2b73370df11c78c73015fa77bdb90f3153b6a530b14f			
+SAMN04958151	SIM_CFSAN000951	-	SRR3479289	outbreak	simulated Salmonella outbreak	0		7a3e748865c20adaba276d3bf50fcfd2f14f54762df3cfc6c131f609f6b236d7	cd5d2df46972405d771a13053661fd1e2543871367bd27f6190c765aa6a4ef71			
+SAMN04335542	SIM_CFSAN000952	-	SRR3020623	outbreak	simulated Salmonella outbreak	0		517b01ad8de25e814a6ec3e0b0d3f54da667daef3705f4d71b7f54a1dad6968c	86dce99eef332ea697e2d318870d8c811e54ca02c58a16b51b1909ea0e965557			
+SAMN04335543	SIM_CFSAN000954	-	SRR3020624	outbreak	simulated Salmonella outbreak	0		65eda4b25aafab8322623d49922491d7cdbb1fc19bf944f90f28bb0ca7be5328	7cf0b3dc54298ef5b19e299cff0146d261f6c1afb26f0a6bda2b32c6099d1b58			
+SAMN04335544	SIM_CFSAN000958	-	SRR3020625	outbreak	simulated Salmonella outbreak	0		d6692b78f8ec5ce850607897343a7407ea66587f86dfb8ebaf4f2093083d6af8	462ee46b078d79e3140ef7997ccfdda65bb0b86bdd0c04a13d62050d0752b376			
+SAMN04335545	SIM_CFSAN000960	-	SRR3020626	outbreak	simulated Salmonella outbreak	0		2ae2e41d966b1ad70dbae9e19dad715728d379ef4e372e12a736d1703bcf2427	331d31078bdd8950a5f97856b3d8c0a0b5d32d081b02e1f7c82a447e4bc3bfb9			
+SAMN04335546	SIM_CFSAN000961	-	SRR3020627	outbreak	simulated Salmonella outbreak	0		775a7c768ccdecc0636b3531ec3dd67b3fcfce3832cc41e0d9c64fb3df99bc00	9aeca06ca15515e007d5764ca24e651f0f3fc8831ffaf241694d3f91c71609ff			
+SAMN04335538	SIM_CFSAN000963	-	SRR3020628	outbreak	simulated Salmonella outbreak	0		4bb2d6a34283aaa8b5bebe233f1eeb4bc6da01ed48a7c03a3aba0d41d662f859	6fc7fdd93ba2916bd65fef941df2615271d94ec9a2dfcca7499f07a8122ad3f4			
+SAMN04335539	SIM_CFSAN000968	-	SRR3020725	outbreak	simulated Salmonella outbreak	0		3260ac31306b50cd08e91e8f4a213acd584b444c41dd99913aa98b8fee2d85fe	086ce331b42418f122314db7b139c50b5c4b6e40a04eda536d30b1e98656d5e0			
+SAMN04335540	SIM_CFSAN000970	-	SRR3020726	outbreak	simulated Salmonella outbreak	0		24ecebbb03866e02f406f72fcc155f281eec9ae918d98584d7de6b178de39017	dad7e6501dfc59dad5145e509c4ee5857ba8a7d2cb4774cd7970c7459ff8950d			
+SAMN04335535	SIM_CFSAN001112	-	SRR3020727	outbreak	simulated Salmonella outbreak	0		a70652ec1b2e8145ac68765e17ef9c7102b41e68c6c7ca8a50ac2f4071c7fd39	961291a1545bfd113ecce1dba51768fc6715e6bcd83372b2baa0f8bcf8c46d1e			
+SAMN04335536	SIM_CFSAN001115	-	SRR3020728	outbreak	simulated Salmonella outbreak	0		4d78eb79c4f9370271ef7a1c191847fca89cf99ba29315efb1d2da3138d23239	50b130a0e47c9d169fd4a29fd2e691f84dc9f021a277cb5f30f8ce73ee48e856			
+SAMN04335537	SIM_CFSAN001118	-	SRR3020729	outbreak	simulated Salmonella outbreak	0		f2e02529fcc24a674b12279ea73a50942d19fecee19a105678ed2c4a26cfa48e	b993781b25eb5cf8220227f2fe46e898264fefc177629b07f855aecbbf945f1a			
+SAMN04335534	SIM_CFSAN001140	-	SRR3020730	outbreak	simulated Salmonella outbreak	0		3db63b52a7c241db817a2df86dd9d951a98bb4571e67ece278a49dde99dd66f3	9a33a1755b30c31fef172b2bf8be4d084097a365bf605cf99b4a8123ced4a5ae			
