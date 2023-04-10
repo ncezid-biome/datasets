@@ -16,6 +16,8 @@ We have detailed the full specification in [SPECIFICATION.md](SPECIFICATION.md).
 To accept the dataset, it must pass limited QC.
 These are our suggested thresholds per sample.
 
+### SARS-CoV-2
+
 * average phred score > 25
 * mean depth per nucleotide > 10x
 * number of nucelotides with depth lower than 10x is < 3000bp
