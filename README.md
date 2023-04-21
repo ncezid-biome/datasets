@@ -45,7 +45,7 @@ If using these datasets, please cite [Timme et al 2017](https://peerj.com/articl
 | 1        | Stone Fruit Food recall | An outbreak of L. monocytogenes| Outbreak analysis | [Listeria_monocytogenes_1408MLGX6-3WGS.tsv](/datasets/Listeria_monocytogenes_1408MLGX6-3WGS.tsv) | [PMID27694232](https://pubmed.ncbi.nlm.nih.gov/27694232) |
 | 2        | Spicy Tuna outbreak | An outbreak of S. enterica | Outbreak analysis | [Salmonella_enterica_1203NYJAP-1.tsv](/datasets/Salmonella_enterica_1203NYJAP-1.tsv) | [PMID25995194](https://pubmed.ncbi.nlm.nih.gov/25995194) |
 | 3        | Simulated outbreak | A simulated outbreak of S. enterica | Outbreak analysis | [Salmonella_enterica_1203NYJAP-1.simulated.tsv](/datasets/Salmonella_enterica_1203NYJAP-1.simulated.tsv) | [Timme et al 2017](https://peerj.com/articles/3893/) |
-| 4        | Raw Milk outbreak | C. jejuni outbreak | Outbreak analysis | [Campylobacter_jejuni_0810PADBR-1.tsv](/datasets/Campylobacter_jejuni_0810PADBR-1.tsv) | <http://www.outbreakdatabase.com/details/hendricks-farm-and-dairy-raw-milk-2008> |
+| 4        | Raw Milk outbreak | C. jejuni outbreak | Outbreak analysis | [Campylobacter_jejuni_0810PADBR-1.tsv](/datasets/Campylobacter_jejuni_0810PADBR-1.tsv) | [http://www.outbreakdatabase.com/details/hendricks-farm-and-dairy-raw-milk-2008](http://web.archive.org/web/20160823210548/http://outbreakdatabase.com/details/hendricks-farm-and-dairy-raw-milk-2008/) |
 | 5        | Sprouts Outbreak | E. coli outbreak | Outbreak analysis | [Escherichia_coli_1405WAEXK-1.tsv](/datasets/Escherichia_coli_1405WAEXK-1.tsv) | <http://www.cdc.gov/ecoli/2014/o121-05-14/index.html> |
 
 ### SARS-CoV-2 datasets
