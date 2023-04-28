@@ -1,10 +1,10 @@
-Organism	SARS-CoV-2
-pmid	-
-dataType	Non_VOI_VOC_Lineages
-Outbreak	-
-source	Norman Hassell and TOAST
-tree	-
-
+Organism	SARS-CoV-2													
+pmid	-													
+dataType	Non_VOI_VOC_Lineages													
+Outbreak	-													
+source	Norman Hassell and TOAST													
+tree	-													
+														
 GISAID_assession	SRArun_acc	biosample_acc	dataSetName	genBankAssembly	lineage_v3.1.3	nucleotide	outbreak	primer_strategy	sha256sumAssembly	sha256sumRead1	sha256sumRead2	sha256sumnucleotide	strain	suggestedReference
 -	SRR11915959	SAMN15087311	-	-	B.35	MT641779	-	-	-	888a4e8a104226e93dfe217915286f3c097c20b0849a2ff46b2c64c9541f35dd	c00a3eb04db8ba34a5e0b97c9c7033a20cfaf462a9a01400b31c0349baf65be7	dd45e46d11424c05e3ffedb49da176c91ef463df4e59e025c160c73c3af3eadc	SARS-CoV-2_human_AUS_TL26_2020	FALSE
 -	NA	-	A	NC_045512.2	-	NA	SNF	-	-	-	-	-	Wuhan-1	TRUE

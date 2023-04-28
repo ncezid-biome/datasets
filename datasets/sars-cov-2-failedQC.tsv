@@ -4,7 +4,7 @@ source	TOAST
 tree	-													
 dataType	TOAST_failed_sequencing_runs													
 pmid	-													
-
+														
 Lineage_v3.1.3	SRArun_acc	benchmark_dataset	biosample_acc	dataSetName	genBankAssembly	nucleotide	outbreak	primer_strategy	sha256sumAssembly	sha256sumRead1	sha256sumRead2	sha256sumnucleotide	strain	suggestedReference
 -	NA	-	-	A	NC_045512.2	NA	SNF	-	-	-	-	-	Wuhan-1	TRUE
 -	SRR16298175	Failed sample, high host contamination (62%)	SAMN22226848	-	-	-	-	CDC in house multiplex PCR primers	-	5b991ba80741225865c39ea9f4e612f080d3b169e48bebb4ba8d15373607c46d	7b137835f2e69315c176991e8285b13772288cdb51ebdbacae26e07af2533ec3	-	benchmark_bad1	FALSE

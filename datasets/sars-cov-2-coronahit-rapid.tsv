@@ -1,10 +1,10 @@
-Outbreak	Coronahit_rapid
-dataType	resequencing_consistency_check
-source	Nabil-Fareed_Alikhan
-pmid	doi://10.1101/2020.06.24.162156
-Organism	SARS-CoV-2
-tree	https://raw.githubusercontent.com/globalmicrobialidentifier-WG3/datasets/master/datasets/trees/sars-cov-2-coronahit-rapid.dnd
-
+Outbreak	Coronahit_rapid										
+dataType	resequencing_consistency_check										
+source	Nabil-Fareed_Alikhan										
+pmid	doi://10.1101/2020.06.24.162156										
+Organism	SARS-CoV-2										
+tree	https://raw.githubusercontent.com/globalmicrobialidentifier-WG3/datasets/master/datasets/trees/sars-cov-2-coronahit-rapid.dnd										
+											
 SRArun_acc	biosample_acc	dataSetName	genBankAssembly	nucleotide	outbreak	sha256sumAssembly	sha256sumRead1	sha256sumRead2	sha256sumnucleotide	strain	suggestedReference
 ERR4969382	ERS5446179	Coronahit_rapid	-	LR963321	NORW-EEEFF 	-	94869296ee632413f2981871763216884b1694243b7eb0ed96cb9512281c7b65	e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855	b3aba2a7dd72d9039849a4b2201d472118f5e66a87f62401dc4f372b7686b733	NORW-EEEFF_ARTIC_LoCost	FALSE
 ERR4970051	ERS5446179	Coronahit_rapid	-	LR963321	NORW-EEEFF 	-	e3afbfbbf81836253424e642591ab9b817809cb07aa2b74e2a4c0205c05962e9	ce23db27138c3f4a79f21df023c3c3e39217375a8ec6996322b7c7cb1a23e149	b3aba2a7dd72d9039849a4b2201d472118f5e66a87f62401dc4f372b7686b733	NORW-EEEFF_CoronaHiT-Illumina	FALSE
