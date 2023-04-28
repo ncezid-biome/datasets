@@ -1,11 +1,11 @@
-pmid	doi://10.1101/2020.06.24.162156
-tree	https://raw.githubusercontent.com/globalmicrobialidentifier-WG3/datasets/master/datasets/trees/sars-cov-2-coronahit-routine.dnd
-Outbreak	Coronahit routine
-source	Nabil-Fareed Alikhan
-Organism	SARS-CoV-2
-dataType	resequencing consistency check
-
-SRArun_acc	biosample_acc	dataSetName	genBankAssembly	nucleotide	outbreak	sha256sumAssembly	sha256sumRead1	sha256sumRead2	sha256sumnucleotide	strain	suggestedReference
+pmid	doi://10.1101/2020.06.24.162156											
+tree	https://raw.githubusercontent.com/globalmicrobialidentifier-WG3/datasets/master/datasets/trees/sars-cov-2-coronahit-routine.dnd											
+Outbreak	Coronahit routine											
+source	Nabil-Fareed Alikhan											
+Organism	SARS-CoV-2											
+dataType	resequencing consistency check											
+												
+SRArun_acc	biosample_acc	dataSetName	genBankAssembly	nucleotide	outbreak	sha256sumAssembly	sha256sumRead1	sha256sumRead2	sha256sumnucleotide	strain	suggestedReference	
 ERR4969060	ERS5446110	Coronahit routine	-	LR963198	NORW-EB232	-	9f2b77ed50aefe3d46a758a077261d77081c4f013391480bdb104fe54f3be63d	e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855	e4f30477f19b4fb7349a1c069c3d9904da68171016bfbac6fcee39dd74865725	NORW-EB232_ARTIC_LoCost	FALSE	
 ERR4970123	ERS5446110	Coronahit routine	-	LR963198	NORW-EB232	-	118203ed22fdc4771f62790bd1aec12a454a2253bb30dfb9b19ca8bb0eb5da77	51e7dbd3b2fb399b8201317db356c0c562a2c4bf34999f4aa08a15e4e5a4fe3b	e4f30477f19b4fb7349a1c069c3d9904da68171016bfbac6fcee39dd74865725	NORW-EB232_CoronaHiT-Illumina	FALSE	
 ERR4968998	ERS5446110	Coronahit routine	-	LR963198	NORW-EB232	-	1172dc8f2c0f75989589c0a95249df5d4731816e98b8d2e741d9e3cb2a1894b9	e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855	e4f30477f19b4fb7349a1c069c3d9904da68171016bfbac6fcee39dd74865725	NORW-EB232_CoronaHiT-ONT	FALSE	
