@@ -4,10 +4,14 @@ MAKEFLAGS += --no-builtin-variables
 export PATH := /scicomp/home-pure/gzu2/src/datasets-ncezid-biome/scripts:$(PATH)
 
 # Get index of some columns in the spreadsheet
+# These idx variables evaluate to an integer corresponding to the column.
 SRR_idx := $(shell grep biosample_acc in.tsv | tr '\t' '\n' | grep -in SRArun_acc | cut -f 1 -d:)
 biosample_acc_idx := $(shell grep biosample_acc in.tsv | tr '\t' '\n' | grep -in biosample_acc | cut -f 1 -d:)
 strain_acc_idx := $(shell grep biosample_acc in.tsv | tr '\t' '\n' | grep -in strain | cut -f 1 -d:)
 assembly_acc_idx := $(shell grep biosample_acc in.tsv | tr '\t' '\n' | grep -in genbankAssembly | cut -f 1 -d:)
+# TODO make different suffixes for either nucleotide-based or assembly-based fasta files to help with sha256sums later on.
+#
+# This is the hash representation of empty string
 zero_byte_hash := $(shell echo -n '' | sha256sum | cut -f 1 -d ' ')
 
 # Misc data
@@ -26,10 +30,22 @@ MANIFEST := $(shell grep -A 999999 biosample_acc in.tsv | perl -F'\t' -MData::Du
 
 sha256_files := $(shell echo "$(MANIFEST)" | tr ' ' '\n' | grep '\.sha256$$')
 
+.DEFAULT: all
+
+.PHONY: all
+
+.DELETE_ON_ERROR:
+
+.PRECIOUS: %_1.fastq %_2.fastq %.fasta %.fasta.sha256 trees.dnd prefetch.done sha256sum.log %_2.fastq.sha256 %_1.fastq.sha256
+	
 MANIFEST: 
-	echo "$(MANIFEST)" | tr ' ' '\n' | grep . > $@
+	echo MANIFEST > $@
+	echo "$(MANIFEST)" | tr ' ' '\n' | grep . >> $@
 	@echo "MANIFEST:"
 	@cat $@ | sed 's/^/  /'; echo
+
+clean: MANIFEST
+	cat MANIFEST | xargs rm -v
 
 print-manifest:
 	@echo $(MANIFEST)
@@ -37,23 +53,19 @@ print-manifest:
 all: $(MANIFEST)
 	@echo "DONE! If you used this script in a publication, please cite us at github.com/WGS-standards-and-analysis/datasets"
 
-.DELETE_ON_ERROR:
-
-.DEFAULT: all
-
-.PHONY: all
-
-.PRECIOUS: %_1.fastq %_2.fastq %.fasta %.fasta.sha256 trees.dnd prefetch.done sha256sum.log %_2.fastq.sha256 %_1.fastq.sha256
-	
 trees.dnd: 
 	wget $(tree_files) > $@
 
 prefetch.done: 
-	SRA_runs=$$(cut -f $(SRR_idx) in.tsv | grep '^SR[RED]' || echo "") && \
+	SRA_runs=$$(cut -f $(SRR_idx) in.tsv | grep '^[SED]RR' || echo "") && \
 	num_SRA_runs=$$(echo "$$SRA_runs" | wc -l) && \
-	for run in $$SRA_runs; do prefetch $$run; done;
-	touch $@
+	for run in $$SRA_runs; do prefetch $$run; done > $@.tmp
+	mv $@.tmp $@
 
+%.prefetched:
+	SRR=$$(basename $@ .prefetched) && \
+		prefetch $$SRR && \
+		touch $@
 
 sha256sum.log: $(sha256_files)
 	sha256sum -c $^ > $@.bak
@@ -64,7 +76,7 @@ sha256sum.log: $(sha256_files)
 	sample=$$(basename $@ _2.fastq) && \
 		biosample_acc_idx=$$(grep biosample_acc in.tsv | tr '\t' '\n' | grep -in biosample_acc | cut -f 1 -d: ) && \
 		biosample=$$(grep "\b$$sample\b" in.tsv | cut -f $(biosample_acc_idx) ) && \
-		SRR=$$(grep "\b$$sample\b" in.tsv | cut -f $(SRR_idx) ) && \
+		SRR=$$(grep "\b$$sample\b" in.tsv | cut -f $(SRR_idx) | head -n 1 ) && \
 		hash_idx=$$(grep biosample_acc in.tsv | tr '\t' '\n' | grep -in sha256sumRead2 | cut -f 1 -d: ) && \
 		hash=$$(grep "\b$$sample\b" in.tsv | cut -f $$hash_idx) && \
 		if [ "$$hash" = "$(zero_byte_hash)" ]; then echo "Second read in pair seems to be blank or missing due to a zero byte hash $(zero_byte_hash) (SRA Run accession: $$SRR)."; touch $@; exit 0; fi && \
@@ -76,16 +88,11 @@ sha256sum.log: $(sha256_files)
 		hash=$$(grep "\b$$sample\b" in.tsv | cut -f $$hash_idx) && \
 		echo "$$hash  $^" > $@
 
-%.prefetched:
-	SRR=$$(basename $@ .prefetched) && \
-		prefetch $$SRR && \
-		touch $@
-
 %_1.fastq: prefetch.done
 	@echo Downloading $@ 
 	sample=$$(basename $@ _1.fastq) && \
 		biosample=$$(grep "\b$$sample\b" in.tsv | cut -f $(biosample_acc_idx) ) && \
-		SRR=$$(grep "\b$$sample\b" in.tsv | cut -f $(SRR_idx) ) && \
+		SRR=$$(grep "\b$$sample\b" in.tsv | cut -f $(SRR_idx) | head -n 1 ) && \
 		if [ "$$SRR" = "-" ]; then echo "SRA Run accession not listed for $$sample (SRA Run accession: $$SRR)."; touch $@; exit 0; fi && \
 		fastq-dump --defline-seq '@$$ac_$$sn/$$ri' --defline-qual '+' --split-3 -O . $$SRR && \
 		mv -v $${SRR}_1.fastq $@ || \
@@ -149,4 +156,13 @@ sha256.verification: prefetch.done
 		$(MAKE) $$file.verified; \
 	done
 	touch $@
+
+# Create a new datasets file from in.tsv.
+# in.tsv must have columns biosample_acc, SRArun_acc, strain, genbankAssembly
+dataset.tsv: MANIFEST
+	#for i in *.fasta *.fastq; do echo $$i >&2; sha256sum $$i > $$i.sha256; done
+	echo -e "sample\tfile\tsha256sum" > sha256.cols
+	for i in *.fastq *.fasta; do echo $$i >&2; echo -ne "$$(basename $$i)\t"; cat $$i | sha256sum - | cut -f 1 -d ' '; done >> sha256.cols
+	cat in.tsv | csvtk cut -f strain,biosample,genbankAssembly,sha256sumAssembly,SRArun_acc,sha256sumRead1,sha256sumRead2,nucleotide,sha256sumnucleotide -t > source.cols
+
 
