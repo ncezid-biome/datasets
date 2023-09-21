@@ -482,6 +482,19 @@ sub tsvToMakeHash{
   }
   close TSV;
 
+  # Fix it so that prefetch only gets 256 params at a time
+  my ($exe, @sraRuns) = split(/\s+/, $$make{"prefetch.done"}{CMD}[0]);
+  # Remove the current command so that it can be replaced
+  shift(@{ $$make{"prefetch.done"}{CMD} });
+  while(@sraRuns){
+    # Add on 250 parameters to make sure we stay under the limit
+    my $cmd = join(" ", $exe, splice(@sraRuns, 0, 250));
+    unshift(
+      @{ $$make{"prefetch.done"}{CMD} },
+      $cmd
+    );
+  }
+
   # Last of the make target(s)
   if(!$$settings{'calculate-hashsums'}){
     push(@{ $$make{"sha256sum.log"}{CMD} }, 
@@ -579,7 +592,7 @@ sub usage{
   --version             Print the version and exit
   --tempdir    ''       Choose a different temp directory than the system default
   --help                Print the usage statement and exit
-  ";
+  \n";
   exit 0;
 }
 
