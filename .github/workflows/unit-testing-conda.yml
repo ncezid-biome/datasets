@@ -10,6 +10,7 @@ jobs:
         os: ['ubuntu-20.04' ]
         perl: [ '5.36.0' ]
         DATASET: 
+          - datasets/campylobacter-pulsenet.tsv
           - datasets/Campylobacter_jejuni_0810PADBR-1.tsv
        #  - datasets/Candida-auris-CladeI-1.tsv
           - datasets/e.coli-Ahrenfeldt-dataset.tsv

@@ -33,6 +33,7 @@ This first table lists datasets curated from the Enteric Diseases Laboratory Bra
 | ------------- | ------------- | ------------- | ------------- | ------------- | ----------| 
 | 1 | Staphylococcus aureus | hybrid Nanopore R9.4.1 and Illumina near-reference quality assembled Staphylococcus aureus whole genomes isolated from sinus swabs from Chronic Rhinosinusitis Patients, along with their plasmids. | Fast assembly of bacterial genomes with AMR | [toy-bacteria-saureus.tsv](/datasets/toy-bacteria-saureus.tsv) | [PRJNA914892](https://ncbi.nlm.nih.gov/bioproject/PRJNA914892) |
 | 2 | Salmonella AMR | A set of _Salmonella enterica_ genomes sequenced by ONT from three different publications. | Assembly and then confirmation of AMR results | [Salmonella-AMR.tsv](/datasets/Salmonella-AMR.tsv) | [PMID36036604](https://pubmed.ncbi.nlm.nih.gov/36036604), [PMID35727013](https://pubmed.ncbi.nlm.nih.gov/35727013), [PMID35416692](https://pubmed.ncbi.nlm.nih.gov/35416692) |
+| 3 | Campylobacter - PulseNet | A set of Campylobacter outbreaks with allele calls from BioNumerics | Test whole genome MLST caller; outbreak clustering | [campylobacter-pulsenet.tsv](/datasets/campylobacter-pulsenet.tsv) | [PMID37133905](https://pubmed.ncbi.nlm.nih.gov/35727013) |
 
 ### Gen-FS
 

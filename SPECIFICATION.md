@@ -102,3 +102,15 @@ SRR22859991	SAMN32360857	-	-	-	-	02d46259b402e83c62b143e96e2dc6761f86b1ac9bd7dfc
 SRR22859768	SAMN32360972	-	-	-	-	fe7b008a59b3aadfccbfe5f8325bf79e9933fe6d44e0956d68e74eba6230ad2f	e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855	-	C347	
 ```
 
+# Create your own
+
+(future instructions for when `Makefile` is in place)
+
+To create your own, create a spreadsheet with at least the required fields as defined above, e.g., `biosample_acc` and `strain`.
+If you include data such as genbankAssembly, then you must have the sha256 accompanying field too such as `sha256sumAssembly`.
+
+For the values of the sha256 fields, use `1` as a placeholder.
+
+Next, run `make all` (this will err due to the sha256sums)
+followed by `make dataset.tsv`.
+
