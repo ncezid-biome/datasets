@@ -29,6 +29,7 @@ jobs:
           - datasets/sars-cov-2-SNF-A.tsv
           - datasets/sars-cov-2-voivoc.tsv
           - datasets/toy-bacteria-saureus.tsv
+          - datasets/eskape-amr.tsv
         NUM_PER_CHUNK:
           - 10
         # CHUNK is a set of numbers in increments of NUM_PER_CHUNK which exceeds the number
