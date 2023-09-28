@@ -180,6 +180,12 @@ sub tsvToMakeHash{
       # Get an index of each column
       my %F;
       @F{@header}=@F;
+      $F{strain} =~ s/\s+/_/g; # remove whitespace from strain with underscores
+      
+      # optional fields with a required value, if present
+      for my $key(qw(srarun_acc sha256sumassembly sha256sumread1 sha256sumread2 nucleotide sha256sumnucleotide)){
+        $F{$key} //= "-";
+      }
 
       # SRA download command
       if($F{srarun_acc} && $F{srarun_acc} !~ /\-|NA/i){
@@ -244,7 +250,7 @@ sub tsvToMakeHash{
           DEP=>[
             $filename1,
           ],
-        },
+        };
         $$make{"$filename2.sha256"}={
           CMD=>[
             "echo \"$F{sha256sumread2}  $filename2\" >> $make_target",
@@ -252,7 +258,7 @@ sub tsvToMakeHash{
           DEP=>[
             $filename2,
           ],
-        },
+        };
         push(@{ $$make{"compressed.done"}{DEP} }, $filename1, $filename2);
 
         # Add onto the `prefetch` command this accession
