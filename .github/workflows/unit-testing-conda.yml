@@ -10,6 +10,7 @@ jobs:
         os: ['ubuntu-20.04' ]
         perl: [ '5.36.0' ]
         DATASET: 
+          - datasets/eskape-amr.tsv
           - datasets/campylobacter-pulsenet.tsv
           - datasets/Campylobacter_jejuni_0810PADBR-1.tsv
        #  - datasets/Candida-auris-CladeI-1.tsv
@@ -29,7 +30,6 @@ jobs:
           - datasets/sars-cov-2-SNF-A.tsv
           - datasets/sars-cov-2-voivoc.tsv
           - datasets/toy-bacteria-saureus.tsv
-          - datasets/eskape-amr.tsv
         NUM_PER_CHUNK:
           - 10
         # CHUNK is a set of numbers in increments of NUM_PER_CHUNK which exceeds the number
@@ -145,5 +145,7 @@ jobs:
             mv -nv t/00_env.bats t/00_env.bats.bak
             # Run the TAP compliant unit test(s) which reads env variable $DATASET
             bats t/*
+            # some cleanup to help with space
+            find . -name '*.fastq' -delete || true
           fi
 
