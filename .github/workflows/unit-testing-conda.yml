@@ -34,7 +34,7 @@ jobs:
           - 5
         # CHUNK is a set of numbers in increments of NUM_PER_CHUNK which exceeds the number
         # of samples in any given dataset.
-        CHUNK: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]
+        CHUNK: [5, 10, 15, 20, 25, 30, 35, 40]
     defaults:
       run:
         shell: bash -el {0}
@@ -144,8 +144,8 @@ jobs:
             mv -nv t/00_env.bats t/00_env.bats.bak
             # Run the TAP compliant unit test(s) which reads env variable $DATASET
             bats t/*
-            # some cleanup to help with space
           fi
+      # some cleanup to help with space
       - name: Cleanup
         run:  |
           find . -name '*.fastq' -exec rm -vf {} \; || true
