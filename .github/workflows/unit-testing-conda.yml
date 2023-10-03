@@ -30,11 +30,13 @@ jobs:
           - datasets/sars-cov-2-SNF-A.tsv
           - datasets/sars-cov-2-voivoc.tsv
           - datasets/toy-bacteria-saureus.tsv
-        NUM_PER_CHUNK:
-          - 5
         # CHUNK is a set of numbers in increments of NUM_PER_CHUNK which exceeds the number
         # of samples in any given dataset.
-        CHUNK: [5, 10, 15, 20, 25, 30, 35, 40]
+        # We cannot go past 256 jobs and so currently we have 19 x 8 chunks = 152.
+        # Raise the chunk number if we get more datasets.
+        CHUNK: [25, 50, 75, 100, 125, 150, 175, 200]
+        NUM_PER_CHUNK:
+          - 25
     defaults:
       run:
         shell: bash -el {0}
