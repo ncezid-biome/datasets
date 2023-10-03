@@ -14,7 +14,7 @@ use File::Temp qw/tempdir tempfile/;
 use File::Spec;
 use File::Copy qw/cp/;
 
-my $VERSION="0.6.2";
+my $VERSION="0.6.3";
 
 my $scriptInvocation="$0 ".join(" ",@ARGV);
 my $scriptsDir=dirname(File::Spec->rel2abs($0));
@@ -180,6 +180,13 @@ sub tsvToMakeHash{
       # Get an index of each column
       my %F;
       @F{@header}=@F;
+      $F{strain} =~ s/\s+/_/g; # replace whitespace from strain with underscores
+      $F{strain} =~ s/:/_/g;   # replace : from strain with underscores
+      
+      # optional fields with a required value, if present
+      for my $key(qw(srarun_acc sha256sumassembly sha256sumread1 sha256sumread2 nucleotide sha256sumnucleotide)){
+        $F{$key} //= "-";
+      }
 
       # SRA download command
       if($F{srarun_acc} && $F{srarun_acc} !~ /\-|NA/i){
@@ -244,7 +251,7 @@ sub tsvToMakeHash{
           DEP=>[
             $filename1,
           ],
-        },
+        };
         $$make{"$filename2.sha256"}={
           CMD=>[
             "echo \"$F{sha256sumread2}  $filename2\" >> $make_target",
@@ -252,7 +259,7 @@ sub tsvToMakeHash{
           DEP=>[
             $filename2,
           ],
-        },
+        };
         push(@{ $$make{"compressed.done"}{DEP} }, $filename1, $filename2);
 
         # Add onto the `prefetch` command this accession

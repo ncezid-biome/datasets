@@ -62,6 +62,7 @@ sub formatSpreadsheet{
   $tsv .= "\n";
 
   my @strain = sort grep{!/^_/} keys(%$info);
+
   my @header = sort keys(%{ $$info{$strain[0]} });
   $tsv .= join("\t", @header)."\n";
   for my $strain(@strain){
@@ -161,6 +162,9 @@ sub readSpreadsheet{
     }
     else{
       my %F = map{$header[$_] => $F[$_]} (0..@F-1);
+      $F{strain} =~ s/\s+/_/g; # replace whitespace from strain with underscores
+      $F{strain} =~ s/:/_/g;   # replace : from strain with underscores
+
       my $strain = $F{strain} or die "ERROR: could not find strain in this line ".Dumper \%F;
       $info{$F{strain}} = \%F;
     }
