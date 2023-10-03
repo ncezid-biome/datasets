@@ -66,6 +66,7 @@ Previous versions of this repo allowed for `NA` but in the current version, `-` 
 | `amplicon_strategy` | :negative_squared_cross_mark: | which amplicon strategy was used? | `ARTIC V3`|
 | `AMR_genotype`  | :negative_squared_cross_mark: | The antimicrobial resistance genotype comma separated | `mdsB,mdsA,golT` |
 | `Plasmids`    | :negative_squared_cross_mark: | Plasmids present, comma separated | `IncFIB(S),IncFII(S),IncX4` |
+| `organism` | :negative_squared_cross_mark: | The scientific name of the sample, or more taxonomic information as needed | Acinetobacter baumannii |
 
 ## Creating hashsums
 
