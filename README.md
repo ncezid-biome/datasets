@@ -175,6 +175,50 @@ cp -v $DATASET $OUTDIR/in.tsv
 cp -v scripts/Makefile.template $OUTDIR/Makefile
 make -j $NUMCPUS -C $OUTDIR all
 
+This is an approximate flowchart of how the Makefile works
+
+```mermaid
+graph BT;
+    prefetch[prefetch.done]
+    sha256sumLog((sha256sum.log))
+    sha256sumLogBak((sha256sum.log.bak))
+    fastqDump{{fastq-dump}}
+    edirect{{edirect}}
+    IN([in.tsv])
+    SRA((SRA file))
+    R1((R1))
+    R2((R2))
+    R1hashsum((R1.sha256))
+    R2hashsum((R2.sha256))
+    fasta((fasta\nassembly))
+    fastahashsum((fasta.sha256))
+    sha256sum{sha256sum}
+    tree((tree.dnd))
+
+    IN --> |prefetch| SRA
+    SRA --> prefetch
+    prefetch -.-> R1
+    R1 -.-> R2
+    R1 -.-> R1hashsum
+    R2 -.-> R2hashsum
+    IN --> R1hashsum
+    IN --> R2hashsum
+    IN --> fastahashsum
+    IN --> tree
+
+    SRA --> fastqDump
+    fastqDump --> R1
+    fastqDump --> R2
+
+    edirect --> fasta
+    fasta -.-> fastahashsum
+
+    fastahashsum --> sha256sum
+    R1hashsum --> sha256sum
+    R2hashsum --> sha256sum
+
+    sha256sum --> |success| sha256sumLog
+    sha256sum --> |fail| sha256sumLogBak
 ```
 
 ## Using a dataset
