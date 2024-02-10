@@ -174,6 +174,7 @@ mkdir $OUTDIR
 cp -v $DATASET $OUTDIR/in.tsv
 cp -v scripts/Makefile.template $OUTDIR/Makefile
 make -j $NUMCPUS -C $OUTDIR all
+```
 
 This is an approximate flowchart of how the Makefile works
 
