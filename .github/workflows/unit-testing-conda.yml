@@ -30,6 +30,7 @@ jobs:
           - datasets/sars-cov-2-SNF-A.tsv
           - datasets/sars-cov-2-voivoc.tsv
           - datasets/toy-bacteria-saureus.tsv
+          #- datasets/coal-metagenomics.tsv
         # CHUNK is a set of numbers in increments of NUM_PER_CHUNK which exceeds the number
         # of samples in any given dataset.
         # We cannot go past 256 jobs and so currently we have 19 x 8 chunks = 152.
