@@ -10,6 +10,7 @@ jobs:
         os: ['ubuntu-20.04' ]
         perl: [ '5.36.0' ]
         DATASET: 
+          - datasets/salm-cgMLST.tsv
           - datasets/eskape-amr.tsv
           - datasets/Candida-auris-CladeI-1.tsv
           - datasets/Salmonella-AMR.tsv
