@@ -52,7 +52,7 @@ jobs:
           echo $today
           echo "today=$today" >> $GITHUB_OUTPUT
       - name: set up conda
-        uses: conda-incubator/setup-miniconda@v2
+        uses: conda-incubator/setup-miniconda@v3
         with:
           python-version: ${{ matrix.python-version }}
           use-mamba: true
