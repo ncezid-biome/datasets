@@ -36,6 +36,7 @@ This first table lists datasets curated from the Enteric Diseases Laboratory Bra
 | 3 | Campylobacter - PulseNet | A set of Campylobacter outbreaks with allele calls from BioNumerics | Test whole genome MLST caller; outbreak clustering | [campylobacter-pulsenet.tsv](/datasets/campylobacter-pulsenet.tsv) | [PMID37133905](https://pubmed.ncbi.nlm.nih.gov/37133905) |
 | 4 | Metagenomics - two outbreaks | A set of metagenomic reads belonging to either an Alabama outbreak or a Colorado outbreak in the US.| Test pipeline on metagenomics outbreak datasets for clustering or pathogen detection | [coal-metagenomics.tsv](/datasets/coal-metagenomics.tsv) | [PMID27881416](https://pubmed.ncbi.nlm.nih.gov/27881416) |
 | 5 | Salmonella - PulseNet | A set of Salmonella outbreaks with allele calls from BioNumerics | Test whole genome MLST caller; outbreak clustering | [salm-cgMLST.tsv](/datasets/salm-cgMLST.tsv) | [PMID37808298](https://pubmed.ncbi.nlm.nih.gov/37808298) |
+| 6 | Escherichia - PulseNet | A set of Escherichia and Shigella outbreaks with allele calls from BioNumerics | Test whole genome MLST caller; outbreak clustering | [stec-outbreak.tsv](/datasets/stec-outbreak.tsv) |  |
 
 ### Gen-FS
 
