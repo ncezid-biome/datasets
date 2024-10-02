@@ -10,6 +10,7 @@ jobs:
         os: ['ubuntu-20.04' ]
         perl: [ '5.36.0' ]
         DATASET: 
+          - datasets/stec-outbreak.tsv
           - datasets/salm-cgMLST.tsv
           - datasets/eskape-amr.tsv
           - datasets/Candida-auris-CladeI-1.tsv
@@ -51,15 +52,12 @@ jobs:
           echo $today
           echo "today=$today" >> $GITHUB_OUTPUT
       - name: set up conda
-        uses: conda-incubator/setup-miniconda@v2
+        uses: conda-incubator/setup-miniconda@v3
         with:
           python-version: ${{ matrix.python-version }}
-          use-mamba: true
-          miniforge-variant: Mambaforge
           miniforge-version: latest
           channel-priority: strict
           channels: conda-forge,bioconda,defaults
-          mamba-version: "*"
           auto-activate-base: true
           activate-environment: "~/conda_pkgs_dir/my-env"
           use-only-tar-bz2: true # IMPORTANT: This needs to be set for caching to work properly!
@@ -99,7 +97,7 @@ jobs:
           echo
           which bats
       - name: checkout my repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: apt-get install
         run:  |
           sudo apt-get update
